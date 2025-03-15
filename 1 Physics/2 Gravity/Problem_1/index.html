@@ -172,6 +172,141 @@
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
 <h1 id="problem-1">Problem 1</h1>
+<h1 id="orbital-period-and-orbital-radius">🌍 <strong>Orbital Period and Orbital Radius</strong></h1>
+<h2 id="motivation">🏗 <strong>Motivation</strong></h2>
+<p>Kepler's Third Law is a fundamental principle of <strong>celestial mechanics</strong>, stating that the square of a planet’s orbital period is proportional to the cube of its orbital radius. This law, derived from <strong>Newton's Law of Universal Gravitation</strong>, is crucial for:<br/>
+- Understanding <strong>planetary motion</strong> and <strong>exoplanet detection</strong><br/>
+- Designing <strong>satellite orbits</strong><br/>
+- Calculating <strong>masses of celestial bodies</strong> </p>
+<p>By deriving and simulating this relationship, we gain insight into the governing laws of planetary systems.  </p>
+<hr/>
+<h2 id="1-theoretical-foundation">⚖ <strong>1. Theoretical Foundation</strong></h2>
+<h3 id="derivation-of-keplers-third-law">📜 <strong>Derivation of Kepler’s Third Law</strong></h3>
+<p>For a body in <strong>circular orbit</strong> around a much larger mass (e.g., a planet around a star), the <strong>gravitational force</strong> provides the necessary <strong>centripetal force</strong>:</p>
+<div class="arithmatex">\[
+F_{\text{gravity}} = F_{\text{centripetal}}
+\]</div>
+<p>Using Newton’s <strong>Law of Gravitation</strong>:</p>
+<div class="arithmatex">\[
+F_{\text{gravity}} = \frac{G M m}{r^2}
+\]</div>
+<p>where:
+- <span class="arithmatex">\( G \)</span> = Gravitational constant (<span class="arithmatex">\(6.674 \times 10^{-11} \, \text{m}^3\text{kg}^{-1}\text{s}^{-2}\)</span>)<br/>
+- <span class="arithmatex">\( M \)</span> = Mass of the central body (e.g., Sun, Earth)<br/>
+- <span class="arithmatex">\( m \)</span> = Mass of the orbiting body<br/>
+- <span class="arithmatex">\( r \)</span> = Orbital radius  </p>
+<p>The <strong>centripetal force</strong> needed to maintain circular motion is:</p>
+<div class="arithmatex">\[
+F_{\text{centripetal}} = \frac{m v^2}{r}
+\]</div>
+<p>Since <span class="arithmatex">\( F_{\text{gravity}} = F_{\text{centripetal}} \)</span>:</p>
+<div class="arithmatex">\[
+\frac{G M m}{r^2} = \frac{m v^2}{r}
+\]</div>
+<p>Canceling <span class="arithmatex">\( m \)</span> and solving for velocity <span class="arithmatex">\( v \)</span>:</p>
+<div class="arithmatex">\[
+v = \sqrt{\frac{G M}{r}}
+\]</div>
+<p>The <strong>orbital period</strong> <span class="arithmatex">\( T \)</span> is the time taken to complete one orbit:</p>
+<div class="arithmatex">\[
+T = \frac{\text{circumference}}{\text{velocity}} = \frac{2\pi r}{v}
+\]</div>
+<p>Substituting <span class="arithmatex">\( v = \sqrt{\frac{G M}{r}} \)</span>:</p>
+<div class="arithmatex">\[
+T = \frac{2\pi r}{\sqrt{\frac{G M}{r}}} = 2\pi \sqrt{\frac{r^3}{G M}}
+\]</div>
+<h3 id="keplers-third-law-final-form">🔹 <strong>Kepler’s Third Law (Final Form)</strong></h3>
+<div class="arithmatex">\[
+T^2 = \frac{4\pi^2}{G M} r^3
+\]</div>
+<p>This shows that <span class="arithmatex">\( T^2 \)</span> is <strong>proportional</strong> to <span class="arithmatex">\( r^3 \)</span>:</p>
+<div class="arithmatex">\[
+T^2 \propto r^3
+\]</div>
+<p>🔹 <strong>Implications:</strong><br/>
+- <strong>Larger orbits = Longer periods</strong><br/>
+- <strong>Planets farther from the Sun move slower</strong><br/>
+- <strong>The mass of the central body can be determined from orbital data</strong> </p>
+<hr/>
+<h2 id="2-real-world-examples">🌍 <strong>2. Real-World Examples</strong></h2>
+<h3 id="1-earths-moon"><strong>1. Earth's Moon</strong></h3>
+<ul>
+<li>Distance: <span class="arithmatex">\( r = 3.844 \times 10^8 \)</span> m  </li>
+<li>Period: <span class="arithmatex">\( T = 27.3 \)</span> days  </li>
+<li>Using Kepler’s Law, we can estimate Earth’s mass.  </li>
+</ul>
+<h3 id="2-planets-in-the-solar-system"><strong>2. Planets in the Solar System</strong></h3>
+<p>If we take <strong>Earth’s orbit</strong> as a reference (<span class="arithmatex">\( r = 1 \)</span> AU, <span class="arithmatex">\( T = 1 \)</span> year), then for any planet:  </p>
+<div class="arithmatex">\[
+\frac{T_{\text{planet}}^2}{r_{\text{planet}}^3} \approx 1
+\]</div>
+<p>This relationship helps predict unknown orbital parameters of newly discovered planets.</p>
+<hr/>
+<h2 id="3-implementation-python-simulation">💻 <strong>3. Implementation (Python Simulation)</strong></h2>
+<p>We’ll verify <strong>Kepler’s Third Law</strong> using numerical simulations.  </p>
+<h3 id="step-1-install-dependencies"><strong>📌 Step 1: Install Dependencies</strong></h3>
+<p>Ensure <strong>NumPy</strong> and <strong>Matplotlib</strong> are installed:</p>
+<pre><code class="language-bash">pip install numpy matplotlib
+</code></pre>
+<hr/>
+<h3 id="step-2-python-code-for-simulation"><strong>📌 Step 2: Python Code for Simulation</strong></h3>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+
+# Constants
+G = 6.674e-11  # Gravitational constant (m³/kg/s²)
+M_sun = 1.989e30  # Mass of the Sun (kg)
+AU = 1.496e11  # 1 Astronomical Unit in meters
+
+# Define orbital radii (in AU) for planets
+r_values_AU = np.array([0.39, 0.72, 1.0, 1.52, 5.2, 9.58, 19.18, 30.07])  # Mercury to Neptune
+r_values_m = r_values_AU * AU  # Convert to meters
+
+# Compute orbital periods using Kepler's Law
+T_values_s = 2 * np.pi * np.sqrt(r_values_m**3 / (G * M_sun))  # In seconds
+T_values_years = T_values_s / (60 * 60 * 24 * 365)  # Convert to years
+
+# Plot T² vs. r³ to verify Kepler's Law
+plt.figure(figsize=(8, 5))
+plt.plot(r_values_m**3, T_values_s**2, 'bo', label="Planets (Simulated Data)")
+
+# Best-fit line (Kepler’s relation)
+coeff = np.polyfit(r_values_m**3, T_values_s**2, 1)
+kepler_fit = np.poly1d(coeff)
+plt.plot(r_values_m**3, kepler_fit(r_values_m**3), 'r--', label="Kepler's Law Fit")
+
+# Labels and title
+plt.xlabel(r"Orbital Radius Cubed ($r^3$) [m³]")
+plt.ylabel(r"Orbital Period Squared ($T^2$) [s²]")
+plt.title("Verification of Kepler's Third Law")
+plt.legend()
+plt.grid()
+plt.show()
+</code></pre>
+<hr/>
+<h2 id="4-results-and-discussion">📊 <strong>4. Results and Discussion</strong></h2>
+<h3 id="graph-interpretation">🔹 <strong>Graph Interpretation</strong></h3>
+<ul>
+<li>The data points <strong>align with a straight line</strong>, confirming <span class="arithmatex">\( T^2 \propto r^3 \)</span>.  </li>
+<li>The <strong>best-fit line</strong> follows <strong>Kepler’s predicted trend</strong>, verifying the law experimentally.  </li>
+</ul>
+<h3 id="applications-of-keplers-law">🔹 <strong>Applications of Kepler’s Law</strong></h3>
+<ul>
+<li><strong>Finding Exoplanets</strong>: Measuring a planet’s orbital period allows astronomers to estimate its <strong>distance from its star</strong>.  </li>
+<li><strong>Space Missions</strong>: Used in designing <strong>satellite orbits</strong> (e.g., GPS, geostationary satellites).  </li>
+</ul>
+<h3 id="limitations">🔹 <strong>Limitations</strong></h3>
+<ul>
+<li><strong>Kepler’s Law assumes circular orbits</strong>, but real orbits are <strong>elliptical</strong>.  </li>
+<li><strong>External forces (e.g., other planets’ gravity) can slightly alter orbits</strong>.  </li>
+</ul>
+<hr/>
+<h2 id="5-extensions-and-future-work">🚀 <strong>5. Extensions and Future Work</strong></h2>
+<ol>
+<li><strong>Simulating elliptical orbits</strong> using Newton’s second law numerically.  </li>
+<li><strong>Adding perturbations</strong> from additional celestial bodies (e.g., Jupiter’s influence on Mars).  </li>
+<li><strong>Modeling binary star systems</strong> where both masses influence the motion.  </li>
+</ol>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
