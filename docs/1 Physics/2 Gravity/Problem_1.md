@@ -150,7 +150,7 @@ plt.grid()
 plt.show()
 ```
 
----
+![alt text](image.png)
 
 ## 📊 **4. Results and Discussion**  
 
@@ -173,3 +173,4 @@ plt.show()
 2. **Adding perturbations** from additional celestial bodies (e.g., Jupiter’s influence on Mars).  
 3. **Modeling binary star systems** where both masses influence the motion.  
 
+g
