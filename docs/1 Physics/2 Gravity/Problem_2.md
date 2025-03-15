@@ -116,7 +116,7 @@ v_3 = \sqrt{\frac{2GM_{\odot}}{r_{\text{Earth}}}}
 
 Using **Sun’s gravity** at **Earth’s distance**:  
 \[
-v_3 \approx 42.1 \text{ km/s}
+approx 42.1 km/s
 \]
 
 ### **🚀 Example: Voyager 1**  
