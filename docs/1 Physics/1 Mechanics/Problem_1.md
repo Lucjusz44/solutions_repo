@@ -112,7 +112,7 @@ plt.grid()
 plt.show()
 ```
 
----
+![alt text](image.png)
 
 ## 📊 **5. Results and Discussion**  
 
