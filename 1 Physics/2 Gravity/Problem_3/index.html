@@ -60,6 +60,58 @@
 </li>
 <li class="toctree-l2 current"><a class="reference internal current" href="#">Problem 3</a>
 <ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="#problem-3-trajectories-of-a-freely-released-payload-near-earth">🚀 Problem 3: Trajectories of a Freely Released Payload Near Earth</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#motivation">Motivation:</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#task-breakdown">Task Breakdown:</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#1-theoretical-foundation">1. Theoretical Foundation</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#newtons-law-of-gravitation">Newton's Law of Gravitation</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#equations-of-motion">Equations of Motion</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#2-simulating-the-trajectories">2. Simulating the Trajectories</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#numerical-integration-runge-kutta-method">Numerical Integration (Runge-Kutta Method)</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#python-implementation">Python Implementation</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#3-explanation-of-the-code">3. Explanation of the Code</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#initial-conditions">Initial Conditions:</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#equations-of-motion_1">Equations of Motion:</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#visualization">Visualization:</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#4-analysis-of-the-trajectories">4. Analysis of the Trajectories</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#possible-trajectories">Possible Trajectories:</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#escape-velocity">Escape Velocity:</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#5-applications-and-real-world-scenarios">5. Applications and Real-World Scenarios</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#orbital-insertion-and-reentry">Orbital Insertion and Reentry:</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#escape-scenarios">Escape Scenarios:</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#space-mission-planning">Space Mission Planning:</a>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -172,6 +224,158 @@
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
 <h1 id="problem-3">Problem 3</h1>
+<h2 id="problem-3-trajectories-of-a-freely-released-payload-near-earth">🚀 <strong>Problem 3: Trajectories of a Freely Released Payload Near Earth</strong></h2>
+<h3 id="motivation"><strong>Motivation:</strong></h3>
+<p>When a payload is released from a moving spacecraft or rocket near Earth, its trajectory is influenced by the gravitational forces exerted by the Earth. The path that the payload takes depends on its <strong>initial velocity</strong>, <strong>position</strong>, and <strong>altitude</strong>. This problem gives insight into understanding real-world scenarios like payload deployment, orbital insertion, or reentry.</p>
+<h3 id="task-breakdown"><strong>Task Breakdown:</strong></h3>
+<ol>
+<li>
+<p><strong>Analyze Possible Trajectories:</strong></p>
+<ul>
+<li>We need to consider the different trajectories a payload can take once released. These could be:</li>
+<li><strong>Parabolic:</strong> The object moves in a curve and eventually falls back to Earth.</li>
+<li><strong>Hyperbolic:</strong> The object escapes Earth's gravity.</li>
+<li><strong>Elliptical:</strong> The object remains in orbit around Earth.</li>
+</ul>
+</li>
+<li>
+<p><strong>Numerical Simulation:</strong></p>
+<ul>
+<li>We’ll perform a <strong>numerical analysis</strong> to compute the path of the payload, given the initial conditions such as <strong>position</strong>, <strong>velocity</strong>, and <strong>altitude</strong>.</li>
+</ul>
+</li>
+<li>
+<p><strong>Visualize and Interpret the Motion:</strong></p>
+<ul>
+<li>We'll visualize the trajectory of the payload under Earth's gravity, considering different initial velocities and directions.</li>
+<li>Discuss real-world applications such as <strong>orbital insertion</strong>, <strong>reentry</strong>, and <strong>escape scenarios</strong>.</li>
+</ul>
+</li>
+</ol>
+<hr/>
+<h2 id="1-theoretical-foundation">1. <strong>Theoretical Foundation</strong></h2>
+<h3 id="newtons-law-of-gravitation"><strong>Newton's Law of Gravitation</strong></h3>
+<p>Newton's law of universal gravitation states that the force between two objects is proportional to the product of their masses and inversely proportional to the square of the distance between them:</p>
+<div class="arithmatex">\[
+F = \frac{GMm}{r^2}
+\]</div>
+<p>Where:<br/>
+- <span class="arithmatex">\( F \)</span> is the gravitational force between Earth and the payload<br/>
+- <span class="arithmatex">\( G \)</span> is the gravitational constant<br/>
+- <span class="arithmatex">\( M \)</span> is the mass of Earth<br/>
+- <span class="arithmatex">\( m \)</span> is the mass of the payload<br/>
+- <span class="arithmatex">\( r \)</span> is the distance between the payload and the center of Earth</p>
+<p>This force leads to the acceleration of the payload towards Earth.</p>
+<h3 id="equations-of-motion"><strong>Equations of Motion</strong></h3>
+<p>Using Newton's second law, the equations of motion for the payload are:</p>
+<div class="arithmatex">\[
+\frac{d^2 r}{dt^2} = -\frac{GM}{r^2}
+\]</div>
+<p>Where:<br/>
+- <span class="arithmatex">\( r \)</span> is the radial distance from the center of Earth
+- <span class="arithmatex">\( \frac{d^2 r}{dt^2} \)</span> is the acceleration of the payload
+- <span class="arithmatex">\( G \)</span> is the gravitational constant
+- <span class="arithmatex">\( M \)</span> is the mass of Earth</p>
+<p>We’ll solve this equation numerically for different initial velocities and directions.</p>
+<hr/>
+<h2 id="2-simulating-the-trajectories">2. <strong>Simulating the Trajectories</strong></h2>
+<h3 id="numerical-integration-runge-kutta-method"><strong>Numerical Integration (Runge-Kutta Method)</strong></h3>
+<p>To simulate the motion, we use a <strong>numerical method</strong> like <strong>Runge-Kutta</strong> for solving the differential equation. This will allow us to calculate the payload's position and velocity at each time step.</p>
+<h3 id="python-implementation"><strong>Python Implementation</strong></h3>
+<p>We will use Python with libraries like <strong>NumPy</strong> and <strong>Matplotlib</strong> to perform the simulation and visualize the payload’s trajectory. Here's how we can do it:</p>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+from scipy.integrate import solve_ivp
+
+# Constants
+G = 6.67430e-11  # Gravitational constant (m^3 kg^-1 s^-2)
+M_earth = 5.972e24  # Mass of Earth (kg)
+R_earth = 6.371e6  # Radius of Earth (m)
+
+# Initial conditions (position and velocity)
+# Position: 500 km above Earth's surface
+r0 = R_earth + 500e3  # Initial distance (m)
+# Velocity: Initial tangential velocity for a circular orbit (i.e., orbital velocity)
+v0 = np.sqrt(G * M_earth / r0)  # Orbital velocity (m/s)
+theta0 = np.pi / 4  # Initial angle (45 degrees)
+vx0 = v0 * np.cos(theta0)  # x component of velocity
+vy0 = v0 * np.sin(theta0)  # y component of velocity
+
+# Define differential equations (dr/dt = v, dv/dt = -GM/r^2)
+def equations(t, y):
+    x, y_pos, vx, vy = y
+    r = np.sqrt(x**2 + y_pos**2)
+    ax = -G * M_earth * x / r**3
+    ay = -G * M_earth * y_pos / r**3
+    return [vx, vy, ax, ay]
+
+# Time span for simulation (0 to 1 hour)
+t_span = (0, 3600)  # 1 hour in seconds
+y0 = [r0 * np.cos(theta0), r0 * np.sin(theta0), vx0, vy0]  # Initial state vector
+
+# Solve using Runge-Kutta method
+sol = solve_ivp(equations, t_span, y0, t_eval=np.linspace(0, 3600, 1000))
+
+# Extract results
+x = sol.y[0]
+y = sol.y[1]
+
+# Plot the trajectory
+plt.figure(figsize=(8, 8))
+plt.plot(x, y, label="Payload Trajectory")
+plt.scatter([0], [0], color="red", label="Earth", s=100)  # Earth at the origin
+plt.title("Trajectory of Payload Released from Rocket Near Earth")
+plt.xlabel("X Position (m)")
+plt.ylabel("Y Position (m)")
+plt.legend()
+plt.grid(True)
+plt.axis('equal')
+plt.show()
+</code></pre>
+<p><img alt="alt text" src="../image-2.png"/></p>
+<h2 id="3-explanation-of-the-code">3. <strong>Explanation of the Code</strong></h2>
+<h3 id="initial-conditions"><strong>Initial Conditions:</strong></h3>
+<ul>
+<li>The payload is released from <strong>500 km</strong> above Earth's surface.</li>
+<li>The initial velocity is calculated to provide a <strong>circular orbit</strong> (orbital velocity) at this altitude, but you can adjust this for different initial conditions.</li>
+<li>The angle is set to <strong>45°</strong> for this example.</li>
+</ul>
+<h3 id="equations-of-motion_1"><strong>Equations of Motion:</strong></h3>
+<ul>
+<li>We define the differential equations for motion based on gravitational forces acting on the payload.</li>
+<li>These equations are solved using the <strong>Runge-Kutta</strong> method provided by <code>scipy.integrate.solve_ivp</code>.</li>
+</ul>
+<h3 id="visualization"><strong>Visualization:</strong></h3>
+<ul>
+<li>The trajectory is plotted in 2D (X vs Y), showing the path of the payload relative to Earth.</li>
+<li><strong>Red dot</strong> marks the center of the Earth.</li>
+</ul>
+<hr/>
+<h2 id="4-analysis-of-the-trajectories">4. <strong>Analysis of the Trajectories</strong></h2>
+<h3 id="possible-trajectories"><strong>Possible Trajectories:</strong></h3>
+<ul>
+<li><strong>Parabolic Trajectory:</strong> If the initial velocity is less than the escape velocity, the payload will follow a parabolic path and eventually fall back to Earth.</li>
+<li><strong>Elliptical Orbit:</strong> If the initial velocity is precisely at the orbital velocity, the payload will follow an elliptical orbit around Earth.</li>
+<li><strong>Hyperbolic Trajectory:</strong> If the initial velocity exceeds the escape velocity, the payload will escape Earth's gravity and move on a hyperbolic trajectory.</li>
+</ul>
+<h3 id="escape-velocity"><strong>Escape Velocity:</strong></h3>
+<p>To achieve a <strong>hyperbolic escape trajectory</strong>, the initial velocity must exceed the escape velocity at the given altitude. This can be calculated by:</p>
+<div class="arithmatex">\[
+v_{\text{escape}} = \sqrt{\frac{2GM}{r}}
+\]</div>
+<p>For Earth, the escape velocity at 500 km is approximately <strong>11.2 km/s</strong>.</p>
+<hr/>
+<h2 id="5-applications-and-real-world-scenarios">5. <strong>Applications and Real-World Scenarios</strong></h2>
+<h3 id="orbital-insertion-and-reentry"><strong>Orbital Insertion and Reentry:</strong></h3>
+<ul>
+<li><strong>Orbital insertion</strong> occurs when the payload reaches a stable orbit (circular or elliptical).</li>
+<li><strong>Reentry</strong> occurs when the payload falls back to Earth after reaching an altitude where it starts to lose velocity due to gravitational forces.</li>
+</ul>
+<h3 id="escape-scenarios"><strong>Escape Scenarios:</strong></h3>
+<p>If the payload is released with enough velocity (hyperbolic trajectory), it may escape Earth's gravity and go on a mission to space or other celestial bodies.</p>
+<h3 id="space-mission-planning"><strong>Space Mission Planning:</strong></h3>
+<p>This model helps plan payload releases for satellite deployment, deep-space missions, or any scenario where the payload’s trajectory is critical to mission success.</p>
+<hr/>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
