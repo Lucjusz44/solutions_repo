@@ -58,6 +58,58 @@
 </li>
 <li class="toctree-l2 current"><a class="reference internal current" href="#">Problem 2</a>
 <ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="#1-simulating-a-spacecrafts-escape-trajectory">🌍 1. Simulating a Spacecraft's Escape Trajectory</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#step-1-equations-of-motion">📌 Step 1: Equations of Motion</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#2-python-implementation-spacecraft-escape-simulation">💻 2. Python Implementation: Spacecraft Escape Simulation</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#code-spacecraft-escape-from-earth">🚀 Code: Spacecraft Escape from Earth</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#_1"></a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#3-results-and-discussion">📊 3. Results and Discussion</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#graph-interpretation">🔹 Graph Interpretation</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#spacecraft-considerations">🔹 Spacecraft Considerations</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#4-extending-to-interstellar-travel">🛸 4. Extending to Interstellar Travel</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#third-cosmic-velocity-interstellar-escape">🔹 Third Cosmic Velocity (Interstellar Escape)</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#example-voyager-1">🚀 Example: Voyager 1</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#5-gravity-assist-slingshot-effect">🌍 5. Gravity Assist (Slingshot Effect)</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#concept">🔹 Concept</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#example-voyager-missions">🚀 Example: Voyager Missions</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#6-python-simulation-gravity-assist">💻 6. Python Simulation: Gravity Assist</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#7-results-and-discussion">📊 7. Results and Discussion</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#gravity-assist-interpretation">🔹 Gravity Assist Interpretation</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#applications-of-gravity-assists">🔹 Applications of Gravity Assists</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#8-future-work-extensions">🚀 8. Future Work &amp; Extensions</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#final-thoughts">🌌 Final Thoughts</a>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../Problem_3/">Problem 3</a>
@@ -172,6 +224,168 @@
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
 <h1 id="problem-2">Problem 2</h1>
+<h2 id="1-simulating-a-spacecrafts-escape-trajectory">🌍 <strong>1. Simulating a Spacecraft's Escape Trajectory</strong></h2>
+<p>We'll numerically integrate the <strong>equations of motion</strong> to simulate a spacecraft escaping Earth, Mars, or Jupiter.  </p>
+<h3 id="step-1-equations-of-motion"><strong>📌 Step 1: Equations of Motion</strong></h3>
+<p>A spacecraft follows <strong>Newton’s Second Law</strong>:</p>
+<div class="arithmatex">\[
+F = m a
+\]</div>
+<p>For <strong>gravitational force</strong>:</p>
+<div class="arithmatex">\[
+F_{\text{gravity}} = \frac{GMm}{r^2}
+\]</div>
+<p>By Newton's Second Law:</p>
+<div class="arithmatex">\[
+a = \frac{F}{m} = \frac{GM}{r^2}
+\]</div>
+<p>Since acceleration is a function of distance <span class="arithmatex">\( r \)</span>, we integrate:</p>
+<div class="arithmatex">\[
+\frac{d^2 r}{dt^2} = -\frac{GM}{r^2}
+\]</div>
+<p>This will be solved <strong>numerically</strong> using <strong>Runge-Kutta (RK4) integration</strong>.</p>
+<hr/>
+<h2 id="2-python-implementation-spacecraft-escape-simulation">💻 <strong>2. Python Implementation: Spacecraft Escape Simulation</strong></h2>
+<h3 id="code-spacecraft-escape-from-earth"><strong>🚀 Code: Spacecraft Escape from Earth</strong></h3>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+from scipy.integrate import solve_ivp
+
+# Constants
+G = 6.674e-11  # Gravitational constant (m³/kg/s²)
+M_earth = 5.97e24  # Mass of Earth (kg)
+R_earth = 6.37e6  # Radius of Earth (m)
+v_escape = np.sqrt(2 * G * M_earth / R_earth)  # Escape velocity (m/s)
+
+# Initial conditions
+r0 = R_earth  # Start at Earth's surface
+v0 = 1.1 * v_escape  # Slightly above escape velocity (scaled)
+t_max = 15000  # Simulation time in seconds
+
+# Define differential equations (dr/dt = v, dv/dt = -GM/r^2)
+def equations(t, y):
+    r, v = y
+    a = -G * M_earth / r**2  # Acceleration due to gravity
+    return [v, a]
+
+# Solve using Runge-Kutta method
+t_span = (0, t_max)
+y0 = [r0, v0]  # Initial position and velocity
+sol = solve_ivp(equations, t_span, y0, t_eval=np.linspace(0, t_max, 1000))
+
+# Extract results
+time = sol.t
+radius = sol.y[0] / 1000  # Convert to km
+velocity = sol.y[1] / 1000  # Convert to km/s
+
+# Plot results
+fig, ax1 = plt.subplots(figsize=(8, 5))
+
+# Plot radius over time
+ax1.plot(time, radius, 'b', label="Distance from Earth")
+ax1.set_xlabel("Time (s)")
+ax1.set_ylabel("Distance from Earth (km)", color='b')
+ax1.tick_params(axis='y', labelcolor='b')
+
+# Create a second y-axis for velocity
+ax2 = ax1.twinx()
+ax2.plot(time, velocity, 'r', label="Velocity")
+ax2.set_ylabel("Velocity (km/s)", color='r')
+ax2.tick_params(axis='y', labelcolor='r')
+
+# Titles and legend
+plt.title("Spacecraft Escape Trajectory from Earth")
+fig.tight_layout()
+plt.show()
+</code></pre>
+<h2 id="_1"><img alt="alt text" src="../image-1.png"/></h2>
+<h2 id="3-results-and-discussion">📊 <strong>3. Results and Discussion</strong></h2>
+<h3 id="graph-interpretation">🔹 <strong>Graph Interpretation</strong></h3>
+<ul>
+<li><strong>Blue curve</strong>: Distance from Earth increases over time → <strong>successful escape</strong>.  </li>
+<li><strong>Red curve</strong>: Velocity decreases due to gravity but remains <strong>above escape velocity</strong>.  </li>
+</ul>
+<h3 id="spacecraft-considerations">🔹 <strong>Spacecraft Considerations</strong></h3>
+<ul>
+<li>If initial velocity <strong>is below <span class="arithmatex">\( v_2 \)</span></strong>, the spacecraft falls back.  </li>
+<li>If velocity <strong>is exactly <span class="arithmatex">\( v_2 \)</span></strong>, it will <strong>asymptotically escape</strong> (speed → 0 at infinity).  </li>
+<li>Higher velocities reduce travel time but require more fuel.  </li>
+</ul>
+<hr/>
+<h2 id="4-extending-to-interstellar-travel">🛸 <strong>4. Extending to Interstellar Travel</strong></h2>
+<p>Once a spacecraft <strong>escapes Earth</strong>, it must also <strong>escape the Sun</strong> to leave the Solar System.  </p>
+<h3 id="third-cosmic-velocity-interstellar-escape"><strong>🔹 Third Cosmic Velocity (Interstellar Escape)</strong></h3>
+<div class="arithmatex">\[
+v_3 = \sqrt{\frac{2GM_{\odot}}{r_{\text{Earth}}}}
+\]</div>
+<p>Using <strong>Sun’s gravity</strong> at <strong>Earth’s distance</strong>:<br/>
+[
+v_3 \approx 42.1 \text{ km/s}
+]</p>
+<h3 id="example-voyager-1"><strong>🚀 Example: Voyager 1</strong></h3>
+<ul>
+<li>Launched: <strong>1977</strong> </li>
+<li>Speed: <strong>17.1 km/s</strong> (needed gravity assists)  </li>
+<li>Still <strong>not at third cosmic velocity</strong>, but will <strong>drift out of the Solar System</strong> eventually.  </li>
+</ul>
+<hr/>
+<h2 id="5-gravity-assist-slingshot-effect">🌍 <strong>5. Gravity Assist (Slingshot Effect)</strong></h2>
+<p>Instead of using massive fuel, <strong>gravity assists</strong> use planetary motion to boost spacecraft speed.  </p>
+<h3 id="concept"><strong>🔹 Concept</strong></h3>
+<p>A spacecraft approaching a moving planet can "steal" some of its <strong>orbital energy</strong>:</p>
+<div class="arithmatex">\[
+v_{\text{final}} = v_{\text{initial}} + 2 v_{\text{planet}}
+\]</div>
+<h3 id="example-voyager-missions"><strong>🚀 Example: Voyager Missions</strong></h3>
+<ul>
+<li>Used <strong>Jupiter &amp; Saturn</strong> to gain speed.  </li>
+<li>Saved <strong>tons of fuel</strong>, making deep-space missions possible.  </li>
+</ul>
+<hr/>
+<h2 id="6-python-simulation-gravity-assist">💻 <strong>6. Python Simulation: Gravity Assist</strong></h2>
+<p>We'll model a spacecraft using Jupiter’s gravity for a speed boost.  </p>
+<pre><code class="language-python"># Jupiter parameters
+M_jupiter = 1.90e27  # kg
+R_jupiter = 6.99e7  # m
+v_jupiter = 13.1e3  # Jupiter's orbital velocity (m/s)
+r_flyby = R_jupiter + 5e7  # Flyby altitude
+
+# Initial velocity before encounter
+v_incoming = 10e3  # 10 km/s towards Jupiter
+
+# Calculate final velocity using gravity assist equation
+v_outgoing = v_incoming + 2 * v_jupiter
+
+# Print results
+print(f"Incoming Velocity: {v_incoming / 1000:.2f} km/s")
+print(f"Outgoing Velocity (after slingshot): {v_outgoing / 1000:.2f} km/s")
+</code></pre>
+<hr/>
+<h2 id="7-results-and-discussion">📊 <strong>7. Results and Discussion</strong></h2>
+<h3 id="gravity-assist-interpretation">🔹 <strong>Gravity Assist Interpretation</strong></h3>
+<ul>
+<li><strong>Before encounter:</strong> 10 km/s  </li>
+<li><strong>After assist:</strong> <strong>~36.2 km/s</strong> 🚀  </li>
+<li><strong>Boost of 26.2 km/s!</strong> (saving tons of fuel)  </li>
+</ul>
+<h3 id="applications-of-gravity-assists">🔹 <strong>Applications of Gravity Assists</strong></h3>
+<ul>
+<li>Used by <strong>Voyager, Cassini, New Horizons, Parker Solar Probe</strong>.  </li>
+<li><strong>Future</strong>: Slingshots around the <strong>Sun</strong> could accelerate interstellar probes.  </li>
+</ul>
+<hr/>
+<h2 id="8-future-work-extensions">🚀 <strong>8. Future Work &amp; Extensions</strong></h2>
+<ul>
+<li><strong>Optimize slingshot maneuvers</strong> for <strong>Mars-Earth return</strong> missions.  </li>
+<li><strong>Simulate long-term trajectories</strong> (e.g., Starshot Probes).  </li>
+<li><strong>Model relativistic effects</strong> for high-speed interstellar travel.  </li>
+</ul>
+<hr/>
+<h2 id="final-thoughts">🌌 <strong>Final Thoughts</strong></h2>
+<p>We’ve covered:<br/>
+✅ <strong>Escape trajectories</strong> 🌍 → 🚀<br/>
+✅ <strong>Interstellar travel challenges</strong> 🚀🌌<br/>
+✅ <strong>Gravity assists for speed boosts</strong> 🚀✨  </p>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
