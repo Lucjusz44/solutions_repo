@@ -172,6 +172,148 @@
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
 <h1 id="problem-2">Problem 2</h1>
+<h1 id="investigating-the-dynamics-of-a-forced-damped-pendulum">📌 <strong>Investigating the Dynamics of a Forced Damped Pendulum</strong></h1>
+<h2 id="motivation">🏗 <strong>Motivation</strong></h2>
+<p>The <strong>forced damped pendulum</strong> is a fascinating system that exhibits a range of behaviors, from simple oscillations to chaotic motion. By introducing <strong>damping</strong> and an <strong>external periodic force</strong>, we observe a transition from regular periodic motion to <strong>resonance, quasiperiodicity, and chaos</strong>.  </p>
+<p>This system is crucial for understanding:<br/>
+- <strong>Resonance in mechanical systems</strong> (e.g., bridges, buildings under periodic stress).<br/>
+- <strong>Nonlinear dynamics and chaos theory</strong> (e.g., weather patterns, heart rhythms).<br/>
+- <strong>Energy harvesting</strong> from oscillations.  </p>
+<hr/>
+<h2 id="1-theoretical-foundation">⚖ <strong>1. Theoretical Foundation</strong></h2>
+<h3 id="equation-of-motion">📜 <strong>Equation of Motion</strong></h3>
+<p>The forced damped pendulum follows the nonlinear differential equation:</p>
+<div class="arithmatex">\[
+\ddot{\theta} + \gamma \dot{\theta} + \omega_0^2 \sin\theta = A \cos(\omega t)
+\]</div>
+<p>where:<br/>
+- <span class="arithmatex">\( \theta \)</span> = angular displacement<br/>
+- <span class="arithmatex">\( \gamma \)</span> = damping coefficient<br/>
+- <span class="arithmatex">\( \omega_0 \)</span> = natural frequency of the pendulum (<span class="arithmatex">\( \omega_0 = \sqrt{\frac{g}{L}} \)</span>)<br/>
+- <span class="arithmatex">\( A \)</span> = amplitude of the external driving force<br/>
+- <span class="arithmatex">\( \omega \)</span> = driving frequency  </p>
+<p>For <strong>small angles</strong> (<span class="arithmatex">\( \theta \approx \sin\theta \)</span>), the equation simplifies to:  </p>
+<div class="arithmatex">\[
+\ddot{\theta} + \gamma \dot{\theta} + \omega_0^2 \theta = A \cos(\omega t)
+\]</div>
+<p>which resembles the equation of a <strong>driven damped harmonic oscillator</strong>.  </p>
+<hr/>
+<h3 id="resonance-condition">📌 <strong>Resonance Condition</strong></h3>
+<p>Resonance occurs when the <strong>driving frequency</strong> <span class="arithmatex">\( \omega \)</span> matches the <strong>natural frequency</strong> <span class="arithmatex">\( \omega_0 \)</span>, leading to maximum energy absorption and large oscillations:</p>
+<div class="arithmatex">\[
+\omega_{\text{res}} \approx \sqrt{\omega_0^2 - \frac{\gamma^2}{4}}
+\]</div>
+<p>At resonance, even small driving forces can produce large oscillations, which is crucial in <strong>mechanical engineering and structural safety</strong>.</p>
+<hr/>
+<h2 id="2-analysis-of-dynamics">📊 <strong>2. Analysis of Dynamics</strong></h2>
+<h3 id="effect-of-damping-gamma">🔹 <strong>Effect of Damping (<span class="arithmatex">\( \gamma \)</span>)</strong></h3>
+<ul>
+<li><strong>Low damping:</strong> The pendulum exhibits large oscillations and resonance.  </li>
+<li><strong>High damping:</strong> The system stabilizes quickly with reduced oscillations.  </li>
+</ul>
+<h3 id="effect-of-driving-amplitude-a">🔹 <strong>Effect of Driving Amplitude (<span class="arithmatex">\( A \)</span>)</strong></h3>
+<ul>
+<li><strong>Low amplitude:</strong> The pendulum undergoes periodic motion.  </li>
+<li><strong>High amplitude:</strong> The system transitions into <strong>chaotic motion</strong> for certain frequencies.  </li>
+</ul>
+<h3 id="effect-of-driving-frequency-omega">🔹 <strong>Effect of Driving Frequency (<span class="arithmatex">\( \omega \)</span>)</strong></h3>
+<ul>
+<li>When <span class="arithmatex">\( \omega \approx \omega_0 \)</span>, <strong>resonance</strong> occurs.  </li>
+<li>When <span class="arithmatex">\( \omega \)</span> is far from <span class="arithmatex">\( \omega_0 \)</span>, the response is weak.  </li>
+<li><strong>Nonlinear behavior</strong> emerges at certain parameter values, leading to chaos.  </li>
+</ul>
+<hr/>
+<h2 id="3-practical-applications">🌍 <strong>3. Practical Applications</strong></h2>
+<ol>
+<li><strong>Engineering &amp; Structural Dynamics</strong> </li>
+<li><strong>Bridges &amp; Skyscrapers:</strong> Understanding how periodic forces (e.g., wind, earthquakes) affect large structures.  </li>
+<li>
+<p><strong>Vibration Isolation:</strong> Designing materials that minimize resonance effects.  </p>
+</li>
+<li>
+<p><strong>Energy Harvesting</strong> </p>
+</li>
+<li><strong>Pendulum-based generators:</strong> Extracting energy from periodic motion.  </li>
+<li>
+<p><strong>Ocean wave energy devices.</strong> </p>
+</li>
+<li>
+<p><strong>Chaos Theory &amp; Climate Models</strong> </p>
+</li>
+<li><strong>Weather prediction models</strong> involve nonlinear oscillatory behaviors similar to the forced pendulum.  </li>
+</ol>
+<hr/>
+<h2 id="4-implementation-python-simulation">💻 <strong>4. Implementation (Python Simulation)</strong></h2>
+<p>Below is a <strong>Python script</strong> that simulates the motion of a forced damped pendulum using <strong>numerical integration (Runge-Kutta method)</strong>.</p>
+<h3 id="step-1-install-required-libraries"><strong>📌 Step 1: Install Required Libraries</strong></h3>
+<p>Before running the code, install NumPy and Matplotlib if needed:</p>
+<pre><code class="language-bash">pip install numpy matplotlib scipy
+</code></pre>
+<hr/>
+<h3 id="step-2-python-code-for-simulation"><strong>📌 Step 2: Python Code for Simulation</strong></h3>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+from scipy.integrate import solve_ivp
+
+# Define system parameters
+g = 9.81   # Gravity (m/s²)
+L = 1.0    # Length of pendulum (m)
+gamma = 0.2  # Damping coefficient
+A = 1.5    # Driving amplitude
+omega = 2.0  # Driving frequency
+
+# Define natural frequency
+omega_0 = np.sqrt(g / L)
+
+# Define the equations of motion
+def forced_damped_pendulum(t, y):
+    theta, omega_t = y
+    dtheta_dt = omega_t
+    domega_dt = -gamma * omega_t - omega_0**2 * np.sin(theta) + A * np.cos(omega * t)
+    return [dtheta_dt, domega_dt]
+
+# Initial conditions: theta = 0.2 rad, omega = 0 rad/s
+y0 = [0.2, 0]
+
+# Time span for simulation
+t_span = (0, 50)
+t_eval = np.linspace(0, 50, 1000)
+
+# Solve ODE using Runge-Kutta method
+sol = solve_ivp(forced_damped_pendulum, t_span, y0, t_eval=t_eval, method='RK45')
+
+# Extract results
+t = sol.t
+theta = sol.y[0]
+
+# Plot results
+plt.figure(figsize=(10, 5))
+plt.plot(t, theta, label=r'$\theta(t)$', color='b')
+plt.xlabel("Time (s)")
+plt.ylabel("Angle (rad)")
+plt.title("Forced Damped Pendulum Motion")
+plt.legend()
+plt.grid()
+plt.show()
+</code></pre>
+<hr/>
+<h2 id="5-results-and-discussion">📊 <strong>5. Results and Discussion</strong></h2>
+<h3 id="graph-interpretation">🔹 <strong>Graph Interpretation</strong></h3>
+<ul>
+<li><strong>At low damping</strong> (<span class="arithmatex">\( \gamma \ll 1 \)</span>), large oscillations appear due to resonance.  </li>
+<li><strong>At high forcing amplitude</strong> (<span class="arithmatex">\( A \gg 1 \)</span>), the motion becomes irregular and chaotic.  </li>
+<li><strong>At specific frequencies</strong> (<span class="arithmatex">\( \omega \approx \omega_0 \)</span>), resonance occurs.  </li>
+</ul>
+<h3 id="phase-space-analysis-pendulum-motion-in-phase-space">🔹 <strong>Phase Space Analysis (Pendulum Motion in Phase Space)</strong></h3>
+<p>To visualize chaotic behavior, we can plot <strong>phase portraits</strong> (<span class="arithmatex">\( \theta \)</span> vs. <span class="arithmatex">\( \dot{\theta} \)</span>):</p>
+<pre><code class="language-python">plt.figure(figsize=(6,6))
+plt.plot(sol.y[0], sol.y[1], color='purple')
+plt.xlabel(r"$\theta$ (rad)")
+plt.ylabel(r"$\dot{\theta}$ (rad/s)")
+plt.title("Phase Portrait of the Forced Damped Pendulum")
+plt.grid()
+plt.show()
+</code></pre>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
