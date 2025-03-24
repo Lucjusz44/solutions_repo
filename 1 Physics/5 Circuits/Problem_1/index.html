@@ -172,6 +172,142 @@
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
 <h1 id="problem-1">Problem 1</h1>
+<h1 id="equivalent-resistance-made-stupid-simple">⚡ <strong>Equivalent Resistance Made Stupid Simple</strong> ⚡</h1>
+<p><em>(No physics jargon, just straight-up clarity with emoji power!)</em> </p>
+<hr/>
+<h2 id="why-bother-with-this"><strong>🎯 Why Bother With This?</strong></h2>
+<ul>
+<li>🔌 <strong>Circuits get messy</strong> – too many resistors = headache.  </li>
+<li>🧠 <strong>Graph theory</strong> turns chaos into order (like magic).  </li>
+<li>💻 <strong>Computers love this method</strong> – great for automation.  </li>
+</ul>
+<hr/>
+<h2 id="tools-you-need"><strong>🛠️ Tools You Need</strong></h2>
+<ol>
+<li><strong>Graph Theory Basics</strong> </li>
+<li>🟢 <strong>Nodes</strong> = Connection points (where wires meet).  </li>
+<li>
+<p>🔵 <strong>Edges</strong> = Resistors (with resistance values).  </p>
+</li>
+<li>
+<p><strong>Two Golden Rules</strong><br/>
+   # ⚡ <strong>Resistance Rules for Normal People</strong> ⚡  </p>
+</li>
+</ol>
+<h3 id="series-one-after-another"><strong>🔗 Series (One After Another)</strong></h3>
+<p>➡ <strong>Total Resistance = Just Add Them!</strong> </p>
+<pre><code>R_total = R₁ + R₂ + R₃ + ...  
+</code></pre>
+<p><strong>Example:</strong><br/>
+<code>2 + 3 + 5 = 10Ω</code> <em>(Like stacking weights – total gets heavier!)</em> </p>
+<hr/>
+<h3 id="parallel-side-by-side"><strong>🔄 Parallel (Side by Side)</strong></h3>
+<p>➡ <strong>For TWO Resistors:</strong> </p>
+<pre><code>R_total = (R₁ × R₂) / (R₁ + R₂)  
+</code></pre>
+<p><strong>Example:</strong><br/>
+Two <code>4Ω</code> resistors:<br/>
+<code>(4 × 4) / (4 + 4) = 2Ω</code> <em>(Like two roads – traffic flows easier!)</em> </p>
+<p>➡ <strong>For THREE+ Resistors:</strong> </p>
+<pre><code>1. Multiply all: R₁ × R₂ × R₃  
+2. Divide by sum of pairs: (R₁R₂ + R₁R₃ + R₂R₃)  
+</code></pre>
+<p><strong>Example:</strong><br/>
+Three <code>2Ω</code> resistors:<br/>
+<code>(2×2×2) / (4 + 4 + 4) = 8/12 ≈ 0.67Ω</code> </p>
+<p><em>(Yes, parallel reduces resistance – more paths = easier flow!)</em> </p>
+<hr/>
+<h3 id="pro-tips"><strong>💡 Pro Tips:</strong></h3>
+<p>✅ <strong>Series:</strong> More resistors = Higher total resistance<br/>
+✅ <strong>Parallel:</strong> More resistors = Lower total resistance<br/>
+✅ <strong>Always convert parallel to two resistors first if possible!</strong> </p>
+<hr/>
+<h2 id="step-by-step-simplification"><strong>🔍 Step-by-Step Simplification</strong></h2>
+<h3 id="1-find-resistors-in-series-straight-line-gang"><strong>1️⃣ Find Resistors in Series (Straight-Line Gang)</strong></h3>
+<ul>
+<li><strong>Look for:</strong> Resistors connected <strong>end-to-end</strong> with <strong>no splits</strong>.  </li>
+<li><strong>Action:</strong> Replace them with <strong>one big resistor</strong> (sum them up).  </li>
+</ul>
+<p><strong>Example:</strong><br/>
+- <code>R₁ = 2Ω</code> + <code>R₂ = 3Ω</code> → <strong>Total = 5Ω</strong> ✅  </p>
+<h3 id="2-find-resistors-in-parallel-side-by-side-squad"><strong>2️⃣ Find Resistors in Parallel (Side-by-Side Squad)</strong></h3>
+<ul>
+<li><strong>Look for:</strong> Resistors <strong>sharing the same start &amp; end points</strong>.  </li>
+<li><strong>Action:</strong> Use the <strong>parallel formula</strong> to merge them.  </li>
+</ul>
+<p><strong>Example:</strong><br/>
+- <code>R₁ = 4Ω</code> || <code>R₂ = 4Ω</code> → <strong>Total = 2Ω</strong> ✅  </p>
+<h3 id="3-repeat-until-only-one-resistor-remains"><strong>3️⃣ Repeat Until Only One Resistor Remains</strong></h3>
+<ul>
+<li>Keep simplifying <strong>series &amp; parallel</strong> until you get <strong>one final R</strong>.  </li>
+</ul>
+<hr/>
+<h2 id="lets-code-it-python-example"><strong>💻 Let’s Code It! (Python Example)</strong></h2>
+<p><em>(For those who want automation!)</em> </p>
+<pre><code class="language-python">import networkx as nx
+
+def simplify_circuit(G):
+    while True:
+        # 1. Check if we're done (only 1 resistor left)
+        if G.number_of_edges() == 1:
+            return list(G.edges(data=True))[0][2]['resistance']
+
+        # 2. Try simplifying series resistors
+        simplified = False
+        for node in list(G.nodes()):
+            neighbors = list(G.neighbors(node))
+            if len(neighbors) == 2:  # Series candidate
+                R1 = G[node][neighbors[0]]['resistance']
+                R2 = G[node][neighbors[1]]['resistance']
+                G.remove_node(node)
+                G.add_edge(neighbors[0], neighbors[1], resistance=R1 + R2)
+                simplified = True
+                break
+
+        if simplified:
+            continue
+
+        # 3. Try simplifying parallel resistors
+        for u, v in list(G.edges()):
+            if G.number_of_edges(u, v) &gt; 1:  # Parallel resistors
+                total_R = 1 / sum(1 / G[u][v][k]['resistance'] for k in G[u][v])
+                G.remove_edges_from(list(G.edges(u, v)))
+                G.add_edge(u, v, resistance=total_R)
+                simplified = True
+                break
+
+        if not simplified:
+            break  # Can't simplify further
+
+    return "Complex circuit! Need advanced methods."
+
+# Example usage
+G = nx.Graph()
+G.add_edge('A', 'B', resistance=2)
+G.add_edge('B', 'C', resistance=3)
+G.add_edge('A', 'C', resistance=6)
+
+print("Total resistance:", simplify_circuit(G))
+</code></pre>
+<hr/>
+<h2 id="real-world-examples"><strong>📊 Real-World Examples</strong></h2>
+<h3 id="1-simple-series-circuit"><strong>1️⃣ Simple Series Circuit</strong></h3>
+<ul>
+<li><code>A --[2Ω]-- B --[3Ω]-- C</code> </li>
+<li><strong>Total = 2 + 3 = 5Ω</strong> </li>
+</ul>
+<h3 id="2-simple-parallel-circuit"><strong>2️⃣ Simple Parallel Circuit</strong></h3>
+<ul>
+<li><code>A --[4Ω]-- B</code> </li>
+<li><code>A --[4Ω]-- B</code> </li>
+<li><strong>Total = 2Ω</strong> </li>
+</ul>
+<h3 id="3-mixed-circuit"><strong>3️⃣ Mixed Circuit</strong></h3>
+<ul>
+<li><code>A --[2Ω]-- B --[3Ω]-- C</code> </li>
+<li><code>A --[6Ω]-- C</code> </li>
+<li><strong>Total = 4Ω</strong> (after simplification)  </li>
+</ul>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
