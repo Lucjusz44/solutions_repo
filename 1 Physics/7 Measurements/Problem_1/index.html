@@ -172,6 +172,112 @@
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
 <h1 id="problem-1">Problem 1</h1>
+<h1 id="measuring-earths-gravity-with-a-diy-pendulum">🌍 <strong>Measuring Earth's Gravity with a DIY Pendulum</strong></h1>
+<hr/>
+<h2 id="materials-checklist"><strong>📝 Materials Checklist</strong></h2>
+<ul>
+<li>🧵 <strong>String</strong> (1-1.5m long)  </li>
+<li>⚖️ <strong>Weight</strong> (keys, small bag of sugar, or anything dense)  </li>
+<li>⏱️ <strong>Stopwatch</strong> (phone works fine)  </li>
+<li>📏 <strong>Ruler/measuring tape</strong> </li>
+</ul>
+<hr/>
+<h2 id="setup-2-minutes"><strong>🔧 Setup (2 Minutes)</strong></h2>
+<ol>
+<li>Tie weight to string  </li>
+<li>Measure length (<em>L</em>) from pivot to weight's center  </li>
+<li>📐 <strong>Uncertainty</strong>: If your ruler has 1mm marks, <em>ΔL = ±0.5mm</em> </li>
+<li>Hang from a fixed point (doorframe, ceiling hook)  </li>
+</ol>
+<p><img alt="alt text" src="../image.png"/>
+<em>(Keep angles &lt;15° for accurate results!)</em> </p>
+<hr/>
+<h2 id="data-collection"><strong>⏳ Data Collection</strong></h2>
+<ol>
+<li><strong>Time 10 swings</strong> (back-and-forth = 1 swing)  </li>
+<li><strong>Repeat 10 times</strong> (reduces timing errors)  </li>
+</ol>
+<h3 id="example-data-table"><strong>📊 Example Data Table</strong></h3>
+<table>
+<thead>
+<tr>
+<th>Trial</th>
+<th>Time for 10 swings (s)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>14.21</td>
+</tr>
+<tr>
+<td>2</td>
+<td>14.18</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr>
+<td>10</td>
+<td>14.25</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Calculations:</strong><br/>
+- <strong>Mean time (T₁₀)</strong>: Average of all trials<br/>
+- <strong>Standard deviation (σ)</strong>: Measures your timing consistency<br/>
+- <strong>Uncertainty (ΔT₁₀)</strong>: <em>σ/√10</em> </p>
+<hr/>
+<h2 id="the-math-simplified"><strong>🧮 The Math (Simplified)</strong></h2>
+<h3 id="1-period-t-per-swing"><strong>1. Period (T) per swing</strong></h3>
+<p>$$ T = \frac{T_{10}}{10} $$<br/>
+<em>(Example: 14.2s/10 = 1.42s)</em> </p>
+<h3 id="2-gravity-formula"><strong>2. Gravity Formula</strong></h3>
+<div class="arithmatex">\[ g = \frac{4\pi^2 L}{T^2} \]</div>
+<p><strong>Example</strong>:<br/>
+- <em>L = 1.00m ±0.0005m</em><br/>
+- <em>T = 1.42s ±0.01s</em><br/>
+→ <em>g ≈ 9.82 m/s²</em> </p>
+<h3 id="3-uncertainty-propagation"><strong>3. Uncertainty Propagation</strong></h3>
+<div class="arithmatex">\[ \frac{\Delta g}{g} = \sqrt{\left(\frac{\Delta L}{L}\right)^2 + \left(2\frac{\Delta T}{T}\right)^2} \]</div>
+<p><em>(This accounts for errors in both length and timing!)</em> </p>
+<hr/>
+<h2 id="expected-results-vs-reality"><strong>📉 Expected Results vs Reality</strong></h2>
+<table>
+<thead>
+<tr>
+<th>Location</th>
+<th>Standard <em>g</em> (m/s²)</th>
+<th>Your Measurement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sea Level</td>
+<td>9.81</td>
+<td>[Your Value]</td>
+</tr>
+<tr>
+<td>High Altitude</td>
+<td>~9.78</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Key Insight</strong>:<br/>
+- Your result should be within <strong>±0.1 m/s²</strong> of 9.81 if done carefully!  </p>
+<hr/>
+<h2 id="error-analysis"><strong>🔍 Error Analysis</strong></h2>
+<h3 id="major-error-sources"><strong>Major Error Sources</strong></h3>
+<ol>
+<li><strong>Angle &gt;15°</strong> → Formula breaks down  </li>
+<li><strong>String stretch</strong> → Changes effective <em>L</em> </li>
+<li><strong>Air resistance</strong> → Slows pendulum slightly  </li>
+<li><strong>Timing reflexes</strong> → Human reaction time (~0.2s error)  </li>
+</ol>
+<p><strong>Pro Tip</strong>: Use <strong>video + frame counting</strong> for better timing!  </p>
+<p>-</p>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
