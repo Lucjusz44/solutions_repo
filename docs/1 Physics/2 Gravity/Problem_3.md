@@ -120,6 +120,8 @@ plt.show()
 
 ## 📊 Results and Analysis
 
+![alt text](image-3.png)
+
 ### Sample Output:
 ```
 | Celestial Body | 1st Cosmic (km/s) | 2nd Cosmic (km/s) | 3rd Cosmic (km/s) |
