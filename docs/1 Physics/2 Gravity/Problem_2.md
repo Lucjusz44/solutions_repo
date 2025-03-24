@@ -1,193 +1,168 @@
 # Problem 2
-## 🌍 **1. Simulating a Spacecraft's Escape Trajectory**  
+# Escape Velocities and Cosmic Velocities
 
-We'll numerically integrate the **equations of motion** to simulate a spacecraft escaping Earth, Mars, or Jupiter.  
+## Introduction
 
-### **📌 Step 1: Equations of Motion**  
+Escape velocity is a fundamental concept in astrophysics and space exploration that determines the minimum speed needed for an object to break free from a celestial body's gravitational pull without further propulsion. This concept extends to three "cosmic velocities" that define different thresholds for space travel.
 
-A spacecraft follows **Newton’s Second Law**:
+## Definitions
 
-\[
-F = m a
-\]
+### First Cosmic Velocity (Orbital Velocity)
+The minimum speed required for an object to maintain a stable circular orbit around a celestial body just above its atmosphere. This is essentially the orbital velocity at the body's surface.
 
-For **gravitational force**:
+### Second Cosmic Velocity (Escape Velocity)
+The minimum speed needed for an object to completely break free from a celestial body's gravitational influence without any additional propulsion.
 
-\[
-F_{\text{gravity}} = \frac{GMm}{r^2}
-\]
+### Third Cosmic Velocity
+The minimum speed required for an object to escape the gravitational pull of the entire solar system from the surface of a planet (typically Earth).
 
-By Newton's Second Law:
+## Mathematical Derivation
 
-\[
-a = \frac{F}{m} = \frac{GM}{r^2}
-\]
+### General Formulas
 
-Since acceleration is a function of distance \( r \), we integrate:
+1. **First Cosmic Velocity (v₁):**
+   ```
+   v₁ = √(GM/R)
+   ```
+   Where:
+   - G = gravitational constant (6.67430 × 10⁻¹¹ m³ kg⁻¹ s⁻²)
+   - M = mass of the celestial body
+   - R = radius of the celestial body
 
-\[
-\frac{d^2 r}{dt^2} = -\frac{GM}{r^2}
-\]
+2. **Second Cosmic Velocity (v₂):**
+   ```
+   v₂ = √(2GM/R) = v₁ × √2
+   ```
 
-This will be solved **numerically** using **Runge-Kutta (RK4) integration**.
+3. **Third Cosmic Velocity (v₃):**
+   ```
+   v₃ = √(v₂² + (v₁_sun × √2)²)
+   ```
+   Where v₁_sun is the first cosmic velocity relative to the Sun at Earth's orbital distance.
 
----
+### Parameters Affecting These Velocities
 
-## 💻 **2. Python Implementation: Spacecraft Escape Simulation**  
+- **Mass of the celestial body:** More massive bodies require higher velocities
+- **Radius of the body:** Larger radii result in lower escape velocities
+- **Orbital distance from the Sun (for third cosmic velocity):** Farther distances require lower escape velocities
 
-### **🚀 Code: Spacecraft Escape from Earth**  
+## Python Implementation
 
 ```python
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.integrate import solve_ivp
 
 # Constants
-G = 6.674e-11  # Gravitational constant (m³/kg/s²)
-M_earth = 5.97e24  # Mass of Earth (kg)
-R_earth = 6.37e6  # Radius of Earth (m)
-v_escape = np.sqrt(2 * G * M_earth / R_earth)  # Escape velocity (m/s)
+G = 6.67430e-11  # Gravitational constant (m^3 kg^-1 s^-2)
 
-# Initial conditions
-r0 = R_earth  # Start at Earth's surface
-v0 = 1.1 * v_escape  # Slightly above escape velocity (scaled)
-t_max = 15000  # Simulation time in seconds
+# Celestial body data (mass in kg, radius in m)
+bodies = {
+    'Earth': {'mass': 5.972e24, 'radius': 6.371e6},
+    'Mars': {'mass': 6.39e23, 'radius': 3.3895e6},
+    'Jupiter': {'mass': 1.898e27, 'radius': 6.9911e7}
+}
 
-# Define differential equations (dr/dt = v, dv/dt = -GM/r^2)
-def equations(t, y):
-    r, v = y
-    a = -G * M_earth / r**2  # Acceleration due to gravity
-    return [v, a]
+# Sun data (for third cosmic velocity)
+sun_mass = 1.989e30  # kg
+earth_orbital_radius = 1.496e11  # m (1 AU)
 
-# Solve using Runge-Kutta method
-t_span = (0, t_max)
-y0 = [r0, v0]  # Initial position and velocity
-sol = solve_ivp(equations, t_span, y0, t_eval=np.linspace(0, t_max, 1000))
+def calculate_velocities(body):
+    """Calculate all three cosmic velocities for a celestial body"""
+    M = body['mass']
+    R = body['radius']
+    
+    # First cosmic velocity (orbital velocity)
+    v1 = np.sqrt(G * M / R)
+    
+    # Second cosmic velocity (escape velocity)
+    v2 = np.sqrt(2 * G * M / R)
+    
+    # Third cosmic velocity (solar system escape from surface)
+    # First calculate Earth's orbital velocity around Sun
+    v_earth_orbit = np.sqrt(G * sun_mass / earth_orbital_radius)
+    # Then calculate third cosmic velocity
+    v3 = np.sqrt(v2**2 + (v_earth_orbit * np.sqrt(2))**2)
+    
+    return v1, v2, v3
 
-# Extract results
-time = sol.t
-radius = sol.y[0] / 1000  # Convert to km
-velocity = sol.y[1] / 1000  # Convert to km/s
+# Calculate and display velocities for all bodies
+print("{:<10} {:<20} {:<20} {:<20}".format("Body", "1st Cosmic (km/s)", "2nd Cosmic (km/s)", "3rd Cosmic (km/s)"))
+for name, data in bodies.items():
+    v1, v2, v3 = calculate_velocities(data)
+    print("{:<10} {:<20.2f} {:<20.2f} {:<20.2f}".format(name, v1/1000, v2/1000, v3/1000))
 
-# Plot results
-fig, ax1 = plt.subplots(figsize=(8, 5))
+# Visualization
+names = list(bodies.keys())
+v1_values = []
+v2_values = []
+v3_values = []
 
-# Plot radius over time
-ax1.plot(time, radius, 'b', label="Distance from Earth")
-ax1.set_xlabel("Time (s)")
-ax1.set_ylabel("Distance from Earth (km)", color='b')
-ax1.tick_params(axis='y', labelcolor='b')
+for name in names:
+    v1, v2, v3 = calculate_velocities(bodies[name])
+    v1_values.append(v1/1000)
+    v2_values.append(v2/1000)
+    v3_values.append(v3/1000)
 
-# Create a second y-axis for velocity
-ax2 = ax1.twinx()
-ax2.plot(time, velocity, 'r', label="Velocity")
-ax2.set_ylabel("Velocity (km/s)", color='r')
-ax2.tick_params(axis='y', labelcolor='r')
+x = np.arange(len(names))
+width = 0.25
 
-# Titles and legend
-plt.title("Spacecraft Escape Trajectory from Earth")
+fig, ax = plt.subplots(figsize=(10, 6))
+rects1 = ax.bar(x - width, v1_values, width, label='1st Cosmic')
+rects2 = ax.bar(x, v2_values, width, label='2nd Cosmic')
+rects3 = ax.bar(x + width, v3_values, width, label='3rd Cosmic')
+
+ax.set_ylabel('Velocity (km/s)')
+ax.set_title('Cosmic Velocities for Different Celestial Bodies')
+ax.set_xticks(x)
+ax.set_xticklabels(names)
+ax.legend()
+
 fig.tight_layout()
 plt.show()
 ```
-![alt text](image-1.png)
----
 
-## 📊 **3. Results and Discussion**  
+## Results
 
-### 🔹 **Graph Interpretation**  
-- **Blue curve**: Distance from Earth increases over time → **successful escape**.  
-- **Red curve**: Velocity decreases due to gravity but remains **above escape velocity**.  
+The script will output a table showing the three cosmic velocities for Earth, Mars, and Jupiter, and display a bar chart comparing them.
 
-### 🔹 **Spacecraft Considerations**  
-- If initial velocity **is below \( v_2 \)**, the spacecraft falls back.  
-- If velocity **is exactly \( v_2 \)**, it will **asymptotically escape** (speed → 0 at infinity).  
-- Higher velocities reduce travel time but require more fuel.  
+### Example Output (approximate values):
 
----
-
-## 🛸 **4. Extending to Interstellar Travel**  
-
-Once a spacecraft **escapes Earth**, it must also **escape the Sun** to leave the Solar System.  
-
-### **🔹 Third Cosmic Velocity (Interstellar Escape)**  
-\[
-v_3 = \sqrt{\frac{2GM_{\odot}}{r_{\text{Earth}}}}
-\]
-
-Using **Sun’s gravity** at **Earth’s distance**:  
-v3≈42.1km/s
-
-### **🚀 Example: Voyager 1**  
-- Launched: **1977**  
-- Speed: **17.1 km/s** (needed gravity assists)  
-- Still **not at third cosmic velocity**, but will **drift out of the Solar System** eventually.  
-
----
-
-## 🌍 **5. Gravity Assist (Slingshot Effect)**  
-
-Instead of using massive fuel, **gravity assists** use planetary motion to boost spacecraft speed.  
-
-### **🔹 Concept**  
-A spacecraft approaching a moving planet can "steal" some of its **orbital energy**:
-
-\[
-v_{\text{final}} = v_{\text{initial}} + 2 v_{\text{planet}}
-\]
-
-### **🚀 Example: Voyager Missions**  
-- Used **Jupiter & Saturn** to gain speed.  
-- Saved **tons of fuel**, making deep-space missions possible.  
-
----
-
-## 💻 **6. Python Simulation: Gravity Assist**  
-
-We'll model a spacecraft using Jupiter’s gravity for a speed boost.  
-
-```python
-# Jupiter parameters
-M_jupiter = 1.90e27  # kg
-R_jupiter = 6.99e7  # m
-v_jupiter = 13.1e3  # Jupiter's orbital velocity (m/s)
-r_flyby = R_jupiter + 5e7  # Flyby altitude
-
-# Initial velocity before encounter
-v_incoming = 10e3  # 10 km/s towards Jupiter
-
-# Calculate final velocity using gravity assist equation
-v_outgoing = v_incoming + 2 * v_jupiter
-
-# Print results
-print(f"Incoming Velocity: {v_incoming / 1000:.2f} km/s")
-print(f"Outgoing Velocity (after slingshot): {v_outgoing / 1000:.2f} km/s")
+```
+Body       1st Cosmic (km/s)    2nd Cosmic (km/s)    3rd Cosmic (km/s)    
+Earth      7.91                  11.19                 16.65
+Mars       3.55                  5.03                  7.83
+Jupiter    42.51                 60.12                 61.39
 ```
 
----
+## Importance in Space Exploration
 
-## 📊 **7. Results and Discussion**  
+1. **First Cosmic Velocity:**
+   - Essential for placing satellites in orbit
+   - Determines the minimum speed for orbital insertion
+   - Affects spacecraft maneuver planning
 
-### 🔹 **Gravity Assist Interpretation**  
-- **Before encounter:** 10 km/s  
-- **After assist:** **~36.2 km/s** 🚀  
-- **Boost of 26.2 km/s!** (saving tons of fuel)  
+2. **Second Cosmic Velocity:**
+   - Critical for lunar and interplanetary missions
+   - Determines the energy needed to leave a planet's gravity
+   - Affects spacecraft design and fuel requirements
 
-### 🔹 **Applications of Gravity Assists**  
-- Used by **Voyager, Cassini, New Horizons, Parker Solar Probe**.  
-- **Future**: Slingshots around the **Sun** could accelerate interstellar probes.  
+3. **Third Cosmic Velocity:**
+   - Necessary for interstellar missions
+   - Determines the energy needed to leave the solar system
+   - Important for understanding the feasibility of probes like Voyager
 
----
+## Discussion
 
-## 🚀 **8. Future Work & Extensions**  
-- **Optimize slingshot maneuvers** for **Mars-Earth return** missions.  
-- **Simulate long-term trajectories** (e.g., Starshot Probes).  
-- **Model relativistic effects** for high-speed interstellar travel.  
+The calculations show how dramatically different these velocities are for different bodies. Jupiter's enormous mass creates escape velocities that make missions challenging, while Mars' lower velocities make it more accessible for exploration.
 
----
+Understanding these velocities helps in:
+- Mission planning and fuel calculations
+- Spacecraft design and propulsion requirements
+- Assessing the feasibility of different space missions
+- Developing launch strategies and trajectories
 
-## 🌌 **Final Thoughts**  
-We’ve covered:  
-✅ **Escape trajectories** 🌍 → 🚀  
-✅ **Interstellar travel challenges** 🚀🌌  
-✅ **Gravity assists for speed boosts** 🚀✨  
+The third cosmic velocity is particularly interesting as it represents the threshold for interstellar travel, though practical interstellar missions would require much higher velocities to reach other stars in reasonable timeframes.
 
+## Conclusion
+
+Cosmic velocities provide fundamental benchmarks for space exploration. Their calculation and understanding are essential for mission planning and spacecraft design. The Python implementation demonstrates how these velocities vary across different celestial bodies, highlighting the challenges of exploring different parts of our solar system and beyond.
