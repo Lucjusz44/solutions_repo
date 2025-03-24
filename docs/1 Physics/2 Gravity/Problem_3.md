@@ -1,68 +1,41 @@
 # Problem 3
-## 🚀 **Problem 3: Trajectories of a Freely Released Payload Near Earth**
+## 🌍 **1. Simulating a Spacecraft's Escape Trajectory**  
 
-### **Motivation:**
-When a payload is released from a moving spacecraft or rocket near Earth, its trajectory is influenced by the gravitational forces exerted by the Earth. The path that the payload takes depends on its **initial velocity**, **position**, and **altitude**. This problem gives insight into understanding real-world scenarios like payload deployment, orbital insertion, or reentry.
+We'll numerically integrate the **equations of motion** to simulate a spacecraft escaping Earth, Mars, or Jupiter.  
 
-### **Task Breakdown:**
-1. **Analyze Possible Trajectories:**
-    - We need to consider the different trajectories a payload can take once released. These could be:
-      - **Parabolic:** The object moves in a curve and eventually falls back to Earth.
-      - **Hyperbolic:** The object escapes Earth's gravity.
-      - **Elliptical:** The object remains in orbit around Earth.
+### **📌 Step 1: Equations of Motion**  
 
-2. **Numerical Simulation:**
-    - We’ll perform a **numerical analysis** to compute the path of the payload, given the initial conditions such as **position**, **velocity**, and **altitude**.
-
-3. **Visualize and Interpret the Motion:**
-    - We'll visualize the trajectory of the payload under Earth's gravity, considering different initial velocities and directions.
-    - Discuss real-world applications such as **orbital insertion**, **reentry**, and **escape scenarios**.
-
----
-
-## 1. **Theoretical Foundation**
-
-### **Newton's Law of Gravitation**
-Newton's law of universal gravitation states that the force between two objects is proportional to the product of their masses and inversely proportional to the square of the distance between them:
+A spacecraft follows **Newton’s Second Law**:
 
 \[
-F = \frac{GMm}{r^2}
+F = m a
 \]
 
-Where:  
-- \( F \) is the gravitational force between Earth and the payload  
-- \( G \) is the gravitational constant  
-- \( M \) is the mass of Earth  
-- \( m \) is the mass of the payload  
-- \( r \) is the distance between the payload and the center of Earth
+For **gravitational force**:
 
-This force leads to the acceleration of the payload towards Earth.
+\[
+F_{\text{gravity}} = \frac{GMm}{r^2}
+\]
 
-### **Equations of Motion**
-Using Newton's second law, the equations of motion for the payload are:
+By Newton's Second Law:
+
+\[
+a = \frac{F}{m} = \frac{GM}{r^2}
+\]
+
+Since acceleration is a function of distance \( r \), we integrate:
 
 \[
 \frac{d^2 r}{dt^2} = -\frac{GM}{r^2}
 \]
 
-Where:  
-- \( r \) is the radial distance from the center of Earth
-- \( \frac{d^2 r}{dt^2} \) is the acceleration of the payload
-- \( G \) is the gravitational constant
-- \( M \) is the mass of Earth
-
-We’ll solve this equation numerically for different initial velocities and directions.
+This will be solved **numerically** using **Runge-Kutta (RK4) integration**.
 
 ---
 
-## 2. **Simulating the Trajectories**
+## 💻 **2. Python Implementation: Spacecraft Escape Simulation**  
 
-### **Numerical Integration (Runge-Kutta Method)**
-To simulate the motion, we use a **numerical method** like **Runge-Kutta** for solving the differential equation. This will allow us to calculate the payload's position and velocity at each time step.
-
-### **Python Implementation**
-
-We will use Python with libraries like **NumPy** and **Matplotlib** to perform the simulation and visualize the payload’s trajectory. Here's how we can do it:
+### **🚀 Code: Spacecraft Escape from Earth**  
 
 ```python
 import numpy as np
@@ -70,101 +43,155 @@ import matplotlib.pyplot as plt
 from scipy.integrate import solve_ivp
 
 # Constants
-G = 6.67430e-11  # Gravitational constant (m^3 kg^-1 s^-2)
-M_earth = 5.972e24  # Mass of Earth (kg)
-R_earth = 6.371e6  # Radius of Earth (m)
+G = 6.674e-11  # Gravitational constant (m³/kg/s²)
+M_earth = 5.97e24  # Mass of Earth (kg)
+R_earth = 6.37e6  # Radius of Earth (m)
+v_escape = np.sqrt(2 * G * M_earth / R_earth)  # Escape velocity (m/s)
 
-# Initial conditions (position and velocity)
-# Position: 500 km above Earth's surface
-r0 = R_earth + 500e3  # Initial distance (m)
-# Velocity: Initial tangential velocity for a circular orbit (i.e., orbital velocity)
-v0 = np.sqrt(G * M_earth / r0)  # Orbital velocity (m/s)
-theta0 = np.pi / 4  # Initial angle (45 degrees)
-vx0 = v0 * np.cos(theta0)  # x component of velocity
-vy0 = v0 * np.sin(theta0)  # y component of velocity
+# Initial conditions
+r0 = R_earth  # Start at Earth's surface
+v0 = 1.1 * v_escape  # Slightly above escape velocity (scaled)
+t_max = 15000  # Simulation time in seconds
 
 # Define differential equations (dr/dt = v, dv/dt = -GM/r^2)
 def equations(t, y):
-    x, y_pos, vx, vy = y
-    r = np.sqrt(x**2 + y_pos**2)
-    ax = -G * M_earth * x / r**3
-    ay = -G * M_earth * y_pos / r**3
-    return [vx, vy, ax, ay]
-
-# Time span for simulation (0 to 1 hour)
-t_span = (0, 3600)  # 1 hour in seconds
-y0 = [r0 * np.cos(theta0), r0 * np.sin(theta0), vx0, vy0]  # Initial state vector
+    r, v = y
+    a = -G * M_earth / r**2  # Acceleration due to gravity
+    return [v, a]
 
 # Solve using Runge-Kutta method
-sol = solve_ivp(equations, t_span, y0, t_eval=np.linspace(0, 3600, 1000))
+t_span = (0, t_max)
+y0 = [r0, v0]  # Initial position and velocity
+sol = solve_ivp(equations, t_span, y0, t_eval=np.linspace(0, t_max, 1000))
 
 # Extract results
-x = sol.y[0]
-y = sol.y[1]
+time = sol.t
+radius = sol.y[0] / 1000  # Convert to km
+velocity = sol.y[1] / 1000  # Convert to km/s
 
-# Plot the trajectory
-plt.figure(figsize=(8, 8))
-plt.plot(x, y, label="Payload Trajectory")
-plt.scatter([0], [0], color="red", label="Earth", s=100)  # Earth at the origin
-plt.title("Trajectory of Payload Released from Rocket Near Earth")
-plt.xlabel("X Position (m)")
-plt.ylabel("Y Position (m)")
-plt.legend()
-plt.grid(True)
-plt.axis('equal')
+# Plot results
+fig, ax1 = plt.subplots(figsize=(8, 5))
+
+# Plot radius over time
+ax1.plot(time, radius, 'b', label="Distance from Earth")
+ax1.set_xlabel("Time (s)")
+ax1.set_ylabel("Distance from Earth (km)", color='b')
+ax1.tick_params(axis='y', labelcolor='b')
+
+# Create a second y-axis for velocity
+ax2 = ax1.twinx()
+ax2.plot(time, velocity, 'r', label="Velocity")
+ax2.set_ylabel("Velocity (km/s)", color='r')
+ax2.tick_params(axis='y', labelcolor='r')
+
+# Titles and legend
+plt.title("Spacecraft Escape Trajectory from Earth")
+fig.tight_layout()
 plt.show()
 ```
+![alt text](image-1.png)
+---
 
-![alt text](image-2.png)
+## 📊 **3. Results and Discussion**  
 
-## 3. **Explanation of the Code**
+### 🔹 **Graph Interpretation**  
+- **Blue curve**: Distance from Earth increases over time → **successful escape**.  
+- **Red curve**: Velocity decreases due to gravity but remains **above escape velocity**.  
 
-### **Initial Conditions:**
-- The payload is released from **500 km** above Earth's surface.
-- The initial velocity is calculated to provide a **circular orbit** (orbital velocity) at this altitude, but you can adjust this for different initial conditions.
-- The angle is set to **45°** for this example.
-
-### **Equations of Motion:**
-- We define the differential equations for motion based on gravitational forces acting on the payload.
-- These equations are solved using the **Runge-Kutta** method provided by `scipy.integrate.solve_ivp`.
-
-### **Visualization:**
-- The trajectory is plotted in 2D (X vs Y), showing the path of the payload relative to Earth.
-- **Red dot** marks the center of the Earth.
+### 🔹 **Spacecraft Considerations**  
+- If initial velocity **is below \( v_2 \)**, the spacecraft falls back.  
+- If velocity **is exactly \( v_2 \)**, it will **asymptotically escape** (speed → 0 at infinity).  
+- Higher velocities reduce travel time but require more fuel.  
 
 ---
 
-## 4. **Analysis of the Trajectories**
+## 🛸 **4. Extending to Interstellar Travel**  
 
-### **Possible Trajectories:**
-- **Parabolic Trajectory:** If the initial velocity is less than the escape velocity, the payload will follow a parabolic path and eventually fall back to Earth.
-- **Elliptical Orbit:** If the initial velocity is precisely at the orbital velocity, the payload will follow an elliptical orbit around Earth.
-- **Hyperbolic Trajectory:** If the initial velocity exceeds the escape velocity, the payload will escape Earth's gravity and move on a hyperbolic trajectory.
+Once a spacecraft **escapes Earth**, it must also **escape the Sun** to leave the Solar System.  
 
-### **Escape Velocity:**
-To achieve a **hyperbolic escape trajectory**, the initial velocity must exceed the escape velocity at the given altitude. This can be calculated by:
-
+### **🔹 Third Cosmic Velocity (Interstellar Escape)**  
 \[
-v_{\text{escape}} = \sqrt{\frac{2GM}{r}}
+v_3 = \sqrt{\frac{2GM_{\odot}}{r_{\text{Earth}}}}
 \]
 
-For Earth, the escape velocity at 500 km is approximately **11.2 km/s**.
+Using **Sun’s gravity** at **Earth’s distance**:  
+v3≈42.1km/s
+
+### **🚀 Example: Voyager 1**  
+- Launched: **1977**  
+- Speed: **17.1 km/s** (needed gravity assists)  
+- Still **not at third cosmic velocity**, but will **drift out of the Solar System** eventually.  
 
 ---
 
-## 5. **Applications and Real-World Scenarios**
+## 🌍 **5. Gravity Assist (Slingshot Effect)**  
 
-### **Orbital Insertion and Reentry:**
-- **Orbital insertion** occurs when the payload reaches a stable orbit (circular or elliptical).
-- **Reentry** occurs when the payload falls back to Earth after reaching an altitude where it starts to lose velocity due to gravitational forces.
+Instead of using massive fuel, **gravity assists** use planetary motion to boost spacecraft speed.  
 
-### **Escape Scenarios:**
-If the payload is released with enough velocity (hyperbolic trajectory), it may escape Earth's gravity and go on a mission to space or other celestial bodies.
+### **🔹 Concept**  
+A spacecraft approaching a moving planet can "steal" some of its **orbital energy**:
 
-### **Space Mission Planning:**
-This model helps plan payload releases for satellite deployment, deep-space missions, or any scenario where the payload’s trajectory is critical to mission success.
+\[
+v_{\text{final}} = v_{\text{initial}} + 2 v_{\text{planet}}
+\]
+
+### **🚀 Example: Voyager Missions**  
+- Used **Jupiter & Saturn** to gain speed.  
+- Saved **tons of fuel**, making deep-space missions possible.  
 
 ---
+
+## 💻 **6. Python Simulation: Gravity Assist**  
+
+We'll model a spacecraft using Jupiter’s gravity for a speed boost.  
+
+```python
+# Jupiter parameters
+M_jupiter = 1.90e27  # kg
+R_jupiter = 6.99e7  # m
+v_jupiter = 13.1e3  # Jupiter's orbital velocity (m/s)
+r_flyby = R_jupiter + 5e7  # Flyby altitude
+
+# Initial velocity before encounter
+v_incoming = 10e3  # 10 km/s towards Jupiter
+
+# Calculate final velocity using gravity assist equation
+v_outgoing = v_incoming + 2 * v_jupiter
+
+# Print results
+print(f"Incoming Velocity: {v_incoming / 1000:.2f} km/s")
+print(f"Outgoing Velocity (after slingshot): {v_outgoing / 1000:.2f} km/s")
+```
+
+---
+
+## 📊 **7. Results and Discussion**  
+
+### 🔹 **Gravity Assist Interpretation**  
+- **Before encounter:** 10 km/s  
+- **After assist:** **~36.2 km/s** 🚀  
+- **Boost of 26.2 km/s!** (saving tons of fuel)  
+
+### 🔹 **Applications of Gravity Assists**  
+- Used by **Voyager, Cassini, New Horizons, Parker Solar Probe**.  
+- **Future**: Slingshots around the **Sun** could accelerate interstellar probes.  
+
+---
+
+## 🚀 **8. Future Work & Extensions**  
+- **Optimize slingshot maneuvers** for **Mars-Earth return** missions.  
+- **Simulate long-term trajectories** (e.g., Starshot Probes).  
+- **Model relativistic effects** for high-speed interstellar travel.  
+
+---
+
+## 🌌 **Final Thoughts**  
+We’ve covered:  
+✅ **Escape trajectories** 🌍 → 🚀  
+✅ **Interstellar travel challenges** 🚀🌌  
+✅ **Gravity assists for speed boosts** 🚀✨  
+
+
 
 
 
