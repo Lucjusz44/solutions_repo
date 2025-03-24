@@ -172,71 +172,93 @@
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
 <h1 id="problem-1">Problem 1</h1>
-<h1 id="equivalent-resistance-using-graph-theory">🔌 Equivalent Resistance Using Graph Theory</h1>
-<h2 id="why-this-matters-simple-explanation">🌟 Why This Matters (Simple Explanation)</h2>
-<p>Calculating total resistance in complex circuits can be like solving a puzzle. Graph theory gives us superpowers to:
-- <strong>Break down complicated circuits</strong> step by step
-- <strong>Spot hidden patterns</strong> in resistor networks
-- <strong>Automate calculations</strong> for computer analysis</p>
-<p>This approach is used in:
-- Circuit design software
-- Power grid analysis
-- Microchip layout optimization</p>
-<h2 id="core-concepts-made-simple">📚 Core Concepts Made Simple</h2>
-<h3 id="circuit-graph-conversion">🔋 Circuit ↔ Graph Conversion</h3>
+<h1 id="equivalent-resistance-made-stupid-simple">⚡ <strong>Equivalent Resistance Made Stupid Simple</strong> ⚡</h1>
+<p><em>(No physics jargon, just straight-up clarity with emoji power!)</em> </p>
+<hr/>
+<h2 id="why-bother-with-this"><strong>🎯 Why Bother With This?</strong></h2>
 <ul>
-<li><strong>Nodes</strong> = Connection points (where wires meet)</li>
-<li><strong>Edges</strong> = Resistors (with resistance values as weights)</li>
+<li>🔌 <strong>Circuits get messy</strong> – too many resistors = headache.  </li>
+<li>🧠 <strong>Graph theory</strong> turns chaos into order (like magic).  </li>
+<li>💻 <strong>Computers love this method</strong> – great for automation.  </li>
 </ul>
-<h3 id="two-key-rules">🔍 Two Key Rules</h3>
+<hr/>
+<h2 id="tools-you-need"><strong>🛠️ Tools You Need</strong></h2>
 <ol>
+<li><strong>Graph Theory Basics</strong> </li>
+<li>🟢 <strong>Nodes</strong> = Connection points (where wires meet).  </li>
 <li>
-<p><strong>Series Reduction</strong>:
-   <code>math
-   R_{eq} = R_1 + R_2 + ... + R_n</code>
-   (Resistors in a straight line)</p>
+<p>🔵 <strong>Edges</strong> = Resistors (with resistance values).  </p>
 </li>
 <li>
-<p><strong>Parallel Reduction</strong>:
-   <code>math
-   \frac{1}{R_{eq}} = \frac{1}{R_1} + \frac{1}{R_2} + ... + \frac{1}{R_n}</code>
-   (Resistors sharing both ends)</p>
+<p><strong>Two Golden Rules</strong><br/>
+   # ⚡ <strong>Resistance Rules for Normal People</strong> ⚡  </p>
 </li>
 </ol>
-<h2 id="python-implementation">💻 Python Implementation</h2>
+<h3 id="series-one-after-another"><strong>🔗 Series (One After Another)</strong></h3>
+<p>➡ <strong>Total Resistance = Just Add Them!</strong> </p>
+<pre><code>R_total = R₁ + R₂ + R₃ + ...  
+</code></pre>
+<p><strong>Example:</strong><br/>
+<code>2 + 3 + 5 = 10Ω</code> <em>(Like stacking weights – total gets heavier!)</em> </p>
+<hr/>
+<h3 id="parallel-side-by-side"><strong>🔄 Parallel (Side by Side)</strong></h3>
+<p>➡ <strong>For TWO Resistors:</strong> </p>
+<pre><code>R_total = (R₁ × R₂) / (R₁ + R₂)  
+</code></pre>
+<p><strong>Example:</strong><br/>
+Two <code>4Ω</code> resistors:<br/>
+<code>(4 × 4) / (4 + 4) = 2Ω</code> <em>(Like two roads – traffic flows easier!)</em> </p>
+<p>➡ <strong>For THREE+ Resistors:</strong> </p>
+<pre><code>1. Multiply all: R₁ × R₂ × R₃  
+2. Divide by sum of pairs: (R₁R₂ + R₁R₃ + R₂R₃)  
+</code></pre>
+<p><strong>Example:</strong><br/>
+Three <code>2Ω</code> resistors:<br/>
+<code>(2×2×2) / (4 + 4 + 4) = 8/12 ≈ 0.67Ω</code> </p>
+<p><em>(Yes, parallel reduces resistance – more paths = easier flow!)</em> </p>
+<hr/>
+<h3 id="pro-tips"><strong>💡 Pro Tips:</strong></h3>
+<p>✅ <strong>Series:</strong> More resistors = Higher total resistance<br/>
+✅ <strong>Parallel:</strong> More resistors = Lower total resistance<br/>
+✅ <strong>Always convert parallel to two resistors first if possible!</strong> </p>
+<hr/>
+<h2 id="step-by-step-simplification"><strong>🔍 Step-by-Step Simplification</strong></h2>
+<h3 id="1-find-resistors-in-series-straight-line-gang"><strong>1️⃣ Find Resistors in Series (Straight-Line Gang)</strong></h3>
+<ul>
+<li><strong>Look for:</strong> Resistors connected <strong>end-to-end</strong> with <strong>no splits</strong>.  </li>
+<li><strong>Action:</strong> Replace them with <strong>one big resistor</strong> (sum them up).  </li>
+</ul>
+<p><strong>Example:</strong><br/>
+- <code>R₁ = 2Ω</code> + <code>R₂ = 3Ω</code> → <strong>Total = 5Ω</strong> ✅  </p>
+<h3 id="2-find-resistors-in-parallel-side-by-side-squad"><strong>2️⃣ Find Resistors in Parallel (Side-by-Side Squad)</strong></h3>
+<ul>
+<li><strong>Look for:</strong> Resistors <strong>sharing the same start &amp; end points</strong>.  </li>
+<li><strong>Action:</strong> Use the <strong>parallel formula</strong> to merge them.  </li>
+</ul>
+<p><strong>Example:</strong><br/>
+- <code>R₁ = 4Ω</code> || <code>R₂ = 4Ω</code> → <strong>Total = 2Ω</strong> ✅  </p>
+<h3 id="3-repeat-until-only-one-resistor-remains"><strong>3️⃣ Repeat Until Only One Resistor Remains</strong></h3>
+<ul>
+<li>Keep simplifying <strong>series &amp; parallel</strong> until you get <strong>one final R</strong>.  </li>
+</ul>
+<hr/>
+<h2 id="lets-code-it-python-example"><strong>💻 Let’s Code It! (Python Example)</strong></h2>
+<p><em>(For those who want automation!)</em> </p>
 <pre><code class="language-python">import networkx as nx
 
-def equivalent_resistance(G, start, end):
-    """
-    Calculate equivalent resistance between two nodes in a resistor network
-
-    Parameters:
-        G (nx.Graph): Graph where edges have 'resistance' attribute
-        start: Starting node
-        end: Ending node
-
-    Returns:
-        float: Equivalent resistance
-    """
-    # Make a copy to avoid modifying original graph
-    G = G.copy()
-
+def simplify_circuit(G):
     while True:
-        # Check if we've simplified to a single edge
-        if G.number_of_edges() == 1 and G.has_edge(start, end):
-            return G[start][end]['resistance']
+        # 1. Check if we're done (only 1 resistor left)
+        if G.number_of_edges() == 1:
+            return list(G.edges(data=True))[0][2]['resistance']
 
-        # --- Series Reduction ---
+        # 2. Try simplifying series resistors
         simplified = False
-
-        # Find nodes with exactly two edges (potential series)
         for node in list(G.nodes()):
-            if node not in [start, end] and len(list(G.neighbors(node))) == 2:
-                neighbors = list(G.neighbors(node))
+            neighbors = list(G.neighbors(node))
+            if len(neighbors) == 2:  # Series candidate
                 R1 = G[node][neighbors[0]]['resistance']
                 R2 = G[node][neighbors[1]]['resistance']
-
-                # Remove the middle node and add series combination
                 G.remove_node(node)
                 G.add_edge(neighbors[0], neighbors[1], resistance=R1 + R2)
                 simplified = True
@@ -245,119 +267,47 @@ def equivalent_resistance(G, start, end):
         if simplified:
             continue
 
-        # --- Parallel Reduction ---
-        # Find all pairs of nodes with multiple edges
+        # 3. Try simplifying parallel resistors
         for u, v in list(G.edges()):
-            if G.number_of_edges(u, v) &gt; 1:
-                # Combine all parallel edges
-                parallel_resistors = [G[u][v][key]['resistance'] 
-                                   for key in G[u][v]]
-                Req = 1 / sum(1/R for R in parallel_resistors)
-
-                # Remove all edges and add single equivalent
+            if G.number_of_edges(u, v) &gt; 1:  # Parallel resistors
+                total_R = 1 / sum(1 / G[u][v][k]['resistance'] for k in G[u][v])
                 G.remove_edges_from(list(G.edges(u, v)))
-                G.add_edge(u, v, resistance=Req)
+                G.add_edge(u, v, resistance=total_R)
                 simplified = True
                 break
 
         if not simplified:
-            break
+            break  # Can't simplify further
 
-    # If we exit without finding direct connection, use nodal analysis
-    A = nx.adjacency_matrix(G, weight='conductance').todense()
-    # Add conductance (1/R) terms for nodal analysis
-    # (Implementation omitted for brevity)
-    return nx.resistance_distance(G, start, end)
+    return "Complex circuit! Need advanced methods."
 
-# Example Usage:
+# Example usage
 G = nx.Graph()
 G.add_edge('A', 'B', resistance=2)
-G.add_edge('B', 'C', resistance=4)
-G.add_edge('C', 'D', resistance=6)
-G.add_edge('A', 'D', resistance=8)
-
-print(f"Equivalent resistance A-D: {equivalent_resistance(G, 'A', 'D'):.2f} ohms")
-</code></pre>
-<h2 id="how-it-works-step-by-step">📊 How It Works - Step by Step</h2>
-<ol>
-<li><strong>Input</strong>: A graph where:</li>
-<li>Nodes = Circuit junctions</li>
-<li>
-<p>Edges = Resistors (with resistance values)</p>
-</li>
-<li>
-<p><strong>Series Detection</strong>:
-   <code>mermaid
-   graph LR
-       A -- R1 --&gt; B -- R2 --&gt; C
-       Becomes:
-       A -- R1+R2 --&gt; C</code></p>
-</li>
-<li>
-<p><strong>Parallel Detection</strong>:
-   <code>mermaid
-   graph LR
-       A -- R1 --&gt; B
-       A -- R2 --&gt; B
-       Becomes:
-       A -- (R1∥R2) --&gt; B</code></p>
-</li>
-<li>
-<p><strong>Repeat Until Simplified</strong>:</p>
-</li>
-<li>Keep applying rules until only start and end nodes remain</li>
-<li>Fall back to nodal analysis if needed</li>
-</ol>
-<h2 id="real-world-examples">🔍 Real-World Examples</h2>
-<h3 id="example-1-simple-series">Example 1: Simple Series</h3>
-<pre><code class="language-python">G = nx.Graph()
-G.add_edge('A', 'B', resistance=2)
 G.add_edge('B', 'C', resistance=3)
-# A -- 2Ω -- B -- 3Ω -- C
-# Expected: 2 + 3 = 5Ω
+G.add_edge('A', 'C', resistance=6)
+
+print("Total resistance:", simplify_circuit(G))
 </code></pre>
-<h3 id="example-2-simple-parallel">Example 2: Simple Parallel</h3>
-<pre><code class="language-python">G.add_edge('A', 'B', resistance=4)
-G.add_edge('A', 'B', resistance=4)
-# Two 4Ω resistors in parallel
-# Expected: (1/4 + 1/4)^-1 = 2Ω
-</code></pre>
-<h3 id="example-3-complex-network">Example 3: Complex Network</h3>
-<pre><code class="language-python">G.add_edges_from([
-    ('A','B', {'resistance': 1}),
-    ('B','C', {'resistance': 2}),
-    ('C','D', {'resistance': 3}),
-    ('A','D', {'resistance': 4}),
-    ('B','D', {'resistance': 5})
-])
-# Combination of series and parallel paths
-</code></pre>
-<h2 id="efficiency-analysis">⚡ Efficiency Analysis</h2>
-<p><strong>Time Complexity</strong>:
-- Best case (simple series/parallel): O(n)
-- Worst case (complex network): O(n³) for nodal analysis</p>
-<p><strong>Optimization Opportunities</strong>:
-1. <strong>Priority Reduction</strong>: Target largest subgraphs first
-2. <strong>Caching</strong>: Store intermediate results
-3. <strong>Hybrid Approach</strong>: Combine with matrix methods</p>
-<h2 id="practical-applications">🛠 Practical Applications</h2>
-<ol>
-<li><strong>Circuit Design</strong>: Quickly evaluate different layouts</li>
-<li><strong>Fault Detection</strong>: Identify unexpected resistances</li>
-<li><strong>Educational Tools</strong>: Visualize circuit simplification</li>
-<li><strong>Power Systems</strong>: Analyze grid impedance</li>
-</ol>
-<h2 id="key-takeaways">🎓 Key Takeaways</h2>
-<ol>
-<li><strong>Graph Theory is Powerful</strong>: Turns circuits into solvable math problems</li>
-<li><strong>Two Rules Rule Them All</strong>: Series and parallel cover most cases</li>
-<li><strong>Automation Friendly</strong>: Perfect for computer implementation</li>
-<li><strong>Real-World Relevant</strong>: Used in everything from microchips to power grids</li>
-</ol>
-<p>Try modifying the code to handle:
-- Circuits with capacitors/inductors
-- Temperature-dependent resistors
-- Three-phase power systems</p>
+<hr/>
+<h2 id="real-world-examples"><strong>📊 Real-World Examples</strong></h2>
+<h3 id="1-simple-series-circuit"><strong>1️⃣ Simple Series Circuit</strong></h3>
+<ul>
+<li><code>A --[2Ω]-- B --[3Ω]-- C</code> </li>
+<li><strong>Total = 2 + 3 = 5Ω</strong> </li>
+</ul>
+<h3 id="2-simple-parallel-circuit"><strong>2️⃣ Simple Parallel Circuit</strong></h3>
+<ul>
+<li><code>A --[4Ω]-- B</code> </li>
+<li><code>A --[4Ω]-- B</code> </li>
+<li><strong>Total = 2Ω</strong> </li>
+</ul>
+<h3 id="3-mixed-circuit"><strong>3️⃣ Mixed Circuit</strong></h3>
+<ul>
+<li><code>A --[2Ω]-- B --[3Ω]-- C</code> </li>
+<li><code>A --[6Ω]-- C</code> </li>
+<li><strong>Total = 4Ω</strong> (after simplification)  </li>
+</ul>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
