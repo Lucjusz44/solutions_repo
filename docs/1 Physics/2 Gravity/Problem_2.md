@@ -1,5 +1,4 @@
 # Problem 2
-# Problem 3
 # Escape Velocities and Cosmic Velocities
 
 ## 🚀 Motivation
