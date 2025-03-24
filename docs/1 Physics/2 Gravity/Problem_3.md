@@ -73,6 +73,8 @@ plt.show()
 
 ## 📊 What You'll See
 
+![alt text](image-5.png)
+
 The simulation shows three paths from the same height:
 1. **Red Path**: Too slow - falls back to Earth
 2. **Green Path**: Just right - orbits Earth
