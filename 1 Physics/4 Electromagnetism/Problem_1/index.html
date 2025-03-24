@@ -172,6 +172,192 @@
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
 <h1 id="problem-1">Problem 1</h1>
+<h1 id="equivalent-resistance-using-graph-theory">🔌 Equivalent Resistance Using Graph Theory</h1>
+<h2 id="why-this-matters-simple-explanation">🌟 Why This Matters (Simple Explanation)</h2>
+<p>Calculating total resistance in complex circuits can be like solving a puzzle. Graph theory gives us superpowers to:
+- <strong>Break down complicated circuits</strong> step by step
+- <strong>Spot hidden patterns</strong> in resistor networks
+- <strong>Automate calculations</strong> for computer analysis</p>
+<p>This approach is used in:
+- Circuit design software
+- Power grid analysis
+- Microchip layout optimization</p>
+<h2 id="core-concepts-made-simple">📚 Core Concepts Made Simple</h2>
+<h3 id="circuit-graph-conversion">🔋 Circuit ↔ Graph Conversion</h3>
+<ul>
+<li><strong>Nodes</strong> = Connection points (where wires meet)</li>
+<li><strong>Edges</strong> = Resistors (with resistance values as weights)</li>
+</ul>
+<h3 id="two-key-rules">🔍 Two Key Rules</h3>
+<ol>
+<li>
+<p><strong>Series Reduction</strong>:
+   <code>math
+   R_{eq} = R_1 + R_2 + ... + R_n</code>
+   (Resistors in a straight line)</p>
+</li>
+<li>
+<p><strong>Parallel Reduction</strong>:
+   <code>math
+   \frac{1}{R_{eq}} = \frac{1}{R_1} + \frac{1}{R_2} + ... + \frac{1}{R_n}</code>
+   (Resistors sharing both ends)</p>
+</li>
+</ol>
+<h2 id="python-implementation">💻 Python Implementation</h2>
+<pre><code class="language-python">import networkx as nx
+
+def equivalent_resistance(G, start, end):
+    """
+    Calculate equivalent resistance between two nodes in a resistor network
+
+    Parameters:
+        G (nx.Graph): Graph where edges have 'resistance' attribute
+        start: Starting node
+        end: Ending node
+
+    Returns:
+        float: Equivalent resistance
+    """
+    # Make a copy to avoid modifying original graph
+    G = G.copy()
+
+    while True:
+        # Check if we've simplified to a single edge
+        if G.number_of_edges() == 1 and G.has_edge(start, end):
+            return G[start][end]['resistance']
+
+        # --- Series Reduction ---
+        simplified = False
+
+        # Find nodes with exactly two edges (potential series)
+        for node in list(G.nodes()):
+            if node not in [start, end] and len(list(G.neighbors(node))) == 2:
+                neighbors = list(G.neighbors(node))
+                R1 = G[node][neighbors[0]]['resistance']
+                R2 = G[node][neighbors[1]]['resistance']
+
+                # Remove the middle node and add series combination
+                G.remove_node(node)
+                G.add_edge(neighbors[0], neighbors[1], resistance=R1 + R2)
+                simplified = True
+                break
+
+        if simplified:
+            continue
+
+        # --- Parallel Reduction ---
+        # Find all pairs of nodes with multiple edges
+        for u, v in list(G.edges()):
+            if G.number_of_edges(u, v) &gt; 1:
+                # Combine all parallel edges
+                parallel_resistors = [G[u][v][key]['resistance'] 
+                                   for key in G[u][v]]
+                Req = 1 / sum(1/R for R in parallel_resistors)
+
+                # Remove all edges and add single equivalent
+                G.remove_edges_from(list(G.edges(u, v)))
+                G.add_edge(u, v, resistance=Req)
+                simplified = True
+                break
+
+        if not simplified:
+            break
+
+    # If we exit without finding direct connection, use nodal analysis
+    A = nx.adjacency_matrix(G, weight='conductance').todense()
+    # Add conductance (1/R) terms for nodal analysis
+    # (Implementation omitted for brevity)
+    return nx.resistance_distance(G, start, end)
+
+# Example Usage:
+G = nx.Graph()
+G.add_edge('A', 'B', resistance=2)
+G.add_edge('B', 'C', resistance=4)
+G.add_edge('C', 'D', resistance=6)
+G.add_edge('A', 'D', resistance=8)
+
+print(f"Equivalent resistance A-D: {equivalent_resistance(G, 'A', 'D'):.2f} ohms")
+</code></pre>
+<h2 id="how-it-works-step-by-step">📊 How It Works - Step by Step</h2>
+<ol>
+<li><strong>Input</strong>: A graph where:</li>
+<li>Nodes = Circuit junctions</li>
+<li>
+<p>Edges = Resistors (with resistance values)</p>
+</li>
+<li>
+<p><strong>Series Detection</strong>:
+   <code>mermaid
+   graph LR
+       A -- R1 --&gt; B -- R2 --&gt; C
+       Becomes:
+       A -- R1+R2 --&gt; C</code></p>
+</li>
+<li>
+<p><strong>Parallel Detection</strong>:
+   <code>mermaid
+   graph LR
+       A -- R1 --&gt; B
+       A -- R2 --&gt; B
+       Becomes:
+       A -- (R1∥R2) --&gt; B</code></p>
+</li>
+<li>
+<p><strong>Repeat Until Simplified</strong>:</p>
+</li>
+<li>Keep applying rules until only start and end nodes remain</li>
+<li>Fall back to nodal analysis if needed</li>
+</ol>
+<h2 id="real-world-examples">🔍 Real-World Examples</h2>
+<h3 id="example-1-simple-series">Example 1: Simple Series</h3>
+<pre><code class="language-python">G = nx.Graph()
+G.add_edge('A', 'B', resistance=2)
+G.add_edge('B', 'C', resistance=3)
+# A -- 2Ω -- B -- 3Ω -- C
+# Expected: 2 + 3 = 5Ω
+</code></pre>
+<h3 id="example-2-simple-parallel">Example 2: Simple Parallel</h3>
+<pre><code class="language-python">G.add_edge('A', 'B', resistance=4)
+G.add_edge('A', 'B', resistance=4)
+# Two 4Ω resistors in parallel
+# Expected: (1/4 + 1/4)^-1 = 2Ω
+</code></pre>
+<h3 id="example-3-complex-network">Example 3: Complex Network</h3>
+<pre><code class="language-python">G.add_edges_from([
+    ('A','B', {'resistance': 1}),
+    ('B','C', {'resistance': 2}),
+    ('C','D', {'resistance': 3}),
+    ('A','D', {'resistance': 4}),
+    ('B','D', {'resistance': 5})
+])
+# Combination of series and parallel paths
+</code></pre>
+<h2 id="efficiency-analysis">⚡ Efficiency Analysis</h2>
+<p><strong>Time Complexity</strong>:
+- Best case (simple series/parallel): O(n)
+- Worst case (complex network): O(n³) for nodal analysis</p>
+<p><strong>Optimization Opportunities</strong>:
+1. <strong>Priority Reduction</strong>: Target largest subgraphs first
+2. <strong>Caching</strong>: Store intermediate results
+3. <strong>Hybrid Approach</strong>: Combine with matrix methods</p>
+<h2 id="practical-applications">🛠 Practical Applications</h2>
+<ol>
+<li><strong>Circuit Design</strong>: Quickly evaluate different layouts</li>
+<li><strong>Fault Detection</strong>: Identify unexpected resistances</li>
+<li><strong>Educational Tools</strong>: Visualize circuit simplification</li>
+<li><strong>Power Systems</strong>: Analyze grid impedance</li>
+</ol>
+<h2 id="key-takeaways">🎓 Key Takeaways</h2>
+<ol>
+<li><strong>Graph Theory is Powerful</strong>: Turns circuits into solvable math problems</li>
+<li><strong>Two Rules Rule Them All</strong>: Series and parallel cover most cases</li>
+<li><strong>Automation Friendly</strong>: Perfect for computer implementation</li>
+<li><strong>Real-World Relevant</strong>: Used in everything from microchips to power grids</li>
+</ol>
+<p>Try modifying the code to handle:
+- Circuits with capacitors/inductors
+- Temperature-dependent resistors
+- Three-phase power systems</p>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
