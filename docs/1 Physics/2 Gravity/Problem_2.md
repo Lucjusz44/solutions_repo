@@ -123,6 +123,8 @@ plt.show()
 
 ## Results
 
+![alt text](image-4.png)
+
 The script will output a table showing the three cosmic velocities for Earth, Mars, and Jupiter, and display a bar chart comparing them.
 
 ### Example Output (approximate values):
