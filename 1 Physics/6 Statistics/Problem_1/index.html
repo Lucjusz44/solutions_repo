@@ -172,6 +172,108 @@
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
 <h1 id="problem-1">Problem 1</h1>
+<h1 id="central-limit-theorem-visual-magic-in-statistics">📊 <strong>Central Limit Theorem: Visual Magic in Statistics!</strong></h1>
+<h2 id="what-is-clt"><strong>🎲 What is CLT?</strong></h2>
+<p><strong>"No matter how weird your data looks, average enough of it → becomes normal!"</strong> </p>
+<p>✅ <strong>Works for ANY distribution</strong> (uniform, exponential, even weird shapes!)<br/>
+✅ <strong>Bigger samples = More perfect bell curve</strong> </p>
+<hr/>
+<h2 id="lets-simulate-it-python-code"><strong>💻 Let's Simulate It! (Python Code)</strong></h2>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Set up 3 crazy different distributions
+distributions = {
+    "Uniform": np.random.uniform(0, 10, 100000),       # Flat like a table
+    "Exponential": np.random.exponential(1, 100000),    # Skewed like a slide
+    "Weird Mix": 0.5*np.random.normal(5,1,100000) + 0.5*np.random.poisson(3,100000)  # Frankenstein data!
+}
+
+# Sampling settings
+sample_sizes = [5, 10, 30, 50]  # Try different sizes!
+n_samples = 1000  # Number of sample means to calculate
+
+plt.figure(figsize=(15,10))
+for i, (name, population) in enumerate(distributions.items()):
+    for j, n in enumerate(sample_sizes):
+        # Calculate 1000 sample means
+        sample_means = [np.mean(np.random.choice(population, n)) for _ in range(n_samples)]
+
+        # Plot
+        plt.subplot(3, 4, i*4 + j + 1)
+        sns.histplot(sample_means, kde=True, color='skyblue')
+        plt.title(f"{name}\nn={n}", fontsize=10)
+        plt.xlim(min(population), max(population))
+
+plt.tight_layout()
+plt.show()
+</code></pre>
+<hr/>
+<h2 id="what-youll-discover"><strong>🔍 What You'll Discover</strong></h2>
+<p><img alt="alt text" src="../image.png"/></p>
+<h3 id="1-small-samples-n5"><strong>1️⃣ Small Samples (n=5)</strong></h3>
+<ul>
+<li>Histogram looks <strong>wild</strong> → Still resembles original shape  </li>
+<li><em>Example:</em> Exponential stays lopsided  </li>
+</ul>
+<h3 id="2-medium-samples-n30"><strong>2️⃣ Medium Samples (n=30)</strong></h3>
+<ul>
+<li>Starts looking <strong>smoother</strong> → Baby bell curve forming!  </li>
+</ul>
+<h3 id="3-large-samples-n50"><strong>3️⃣ Large Samples (n=50+)</strong></h3>
+<ul>
+<li><strong>Perfect normal distribution</strong> → Magic of CLT! 🎩✨  </li>
+<li><em>Even for "Weird Mix" data!</em> </li>
+</ul>
+<hr/>
+<h2 id="real-world-superpowers"><strong>🌎 Real-World Superpowers</strong></h2>
+<table>
+<thead>
+<tr>
+<th>Application</th>
+<th>How CLT Saves the Day</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Elections</strong> 🗳️</td>
+<td>Predict winner from small polls accurately</td>
+</tr>
+<tr>
+<td><strong>Drug Trials</strong> 💊</td>
+<td>Prove medicine works despite individual differences</td>
+</tr>
+<tr>
+<td><strong>Quality Control</strong> 🏭</td>
+<td>Detect faulty machines from sample testing</td>
+</tr>
+</tbody>
+</table>
+<hr/>
+<h2 id="play-with-these-settings"><strong>🎮 Play With These Settings!</strong></h2>
+<pre><code class="language-python"># TRY THESE TWEAKS:
+sample_sizes = [2, 10, 50, 100]  # Watch how tiny samples struggle!
+n_samples = 5000  # More means = smoother curves
+</code></pre>
+<hr/>
+<h2 id="golden-insights"><strong>💡 Golden Insights</strong></h2>
+<ul>
+<li><strong>Sample size &gt;30</strong> → Usually good enough for normality  </li>
+<li><strong>Skewed original data?</strong> → Needs bigger samples to "normalize"  </li>
+<li><strong>CLT explains why averages are everywhere</strong> (test scores, heights, etc.)  </li>
+</ul>
+<hr/>
+<h2 id="next-level-exploration"><strong>🚀 Next-Level Exploration</strong></h2>
+<ol>
+<li>Add <strong>"Crazy Distribution"</strong> → Like two humps (bimodal)  </li>
+<li>Test <strong>tiny samples (n=2)</strong> → See CLT fail dramatically  </li>
+<li>Plot <strong>standard deviation</strong> → Shows shrinking spread with bigger n  </li>
+</ol>
+<p><strong>Run this in Jupyter Notebook to interactively play!</strong> </p>
+<blockquote>
+<p><em>"The CLT is why statisticians sleep well at night."</em> 😴📈</p>
+</blockquote>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
