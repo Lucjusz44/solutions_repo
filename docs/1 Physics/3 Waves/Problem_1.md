@@ -1,7 +1,3 @@
-Got it! Here's the improved and **complete version** that keeps your original **Motivation** exactly as it is, while adding the **missing formulas, problem statement, explanation, and simplified solution steps**.
-
----
-
 # 🌊 Interference Patterns on a Water Surface
 
 ## 🎯 Motivation
