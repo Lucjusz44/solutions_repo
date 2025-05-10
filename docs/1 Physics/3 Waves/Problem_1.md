@@ -43,11 +43,19 @@ Where:
 
 To find the **total wave height** at any point on the grid, we add the contributions from all sources:
 
-Sure! Here's the formula:
-
 $$
 \eta(x, y, t) = \frac{A}{\sqrt{r}} \cos(k r - \omega t + \phi)
 $$
+
+Where:
+
+* $\eta(x, y, t)$ is the displacement of the water surface at point $(x, y)$ and time $t$,
+* $A$ is the amplitude of the wave,
+* $k = \frac{2\pi}{\lambda}$ is the wave number, related to the wavelength $\lambda$,
+* $\omega = 2\pi f$ is the angular frequency, related to the frequency $f$,
+* $r = \sqrt{x^2 + y^2}$ is the distance from the source to the point $(x, y)$,
+* $\phi$ is the initial phase of the wave.
+
 
 ---
 ### 6. **Visualize**
