@@ -216,10 +216,18 @@
 <hr/>
 <h2 id="superposition-adding-the-waves-together">🔗 Superposition: Adding the Waves Together</h2>
 <p>To find the <strong>total wave height</strong> at any point on the grid, we add the contributions from all sources:</p>
-<p>Sure! Here's the formula:</p>
 <div class="arithmatex">\[
 \eta(x, y, t) = \frac{A}{\sqrt{r}} \cos(k r - \omega t + \phi)
 \]</div>
+<p>Where:</p>
+<ul>
+<li><span class="arithmatex">\(\eta(x, y, t)\)</span> is the displacement of the water surface at point <span class="arithmatex">\((x, y)\)</span> and time <span class="arithmatex">\(t\)</span>,</li>
+<li><span class="arithmatex">\(A\)</span> is the amplitude of the wave,</li>
+<li><span class="arithmatex">\(k = \frac{2\pi}{\lambda}\)</span> is the wave number, related to the wavelength <span class="arithmatex">\(\lambda\)</span>,</li>
+<li><span class="arithmatex">\(\omega = 2\pi f\)</span> is the angular frequency, related to the frequency <span class="arithmatex">\(f\)</span>,</li>
+<li><span class="arithmatex">\(r = \sqrt{x^2 + y^2}\)</span> is the distance from the source to the point <span class="arithmatex">\((x, y)\)</span>,</li>
+<li><span class="arithmatex">\(\phi\)</span> is the initial phase of the wave.</li>
+</ul>
 <hr/>
 <h3 id="6-visualize">6. <strong>Visualize</strong></h3>
 <p>We'll use Python + Matplotlib to simulate and visualize the interference.</p>
