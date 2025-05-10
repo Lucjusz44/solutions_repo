@@ -116,5 +116,5 @@ plt.xlabel("X Position")  # X-axis label
 plt.ylabel("Y Position")  # Y-axis label
 plt.grid(True, linestyle='--', alpha=0.3)  # Grid with dashed lines
 plt.show()
-
+```
 ![alt text](image-1.png)
