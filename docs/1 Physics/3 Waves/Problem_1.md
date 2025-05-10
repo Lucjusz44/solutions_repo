@@ -1,3 +1,7 @@
+Got it! Here's the improved and **complete version** that keeps your original **Motivation** exactly as it is, while adding the **missing formulas, problem statement, explanation, and simplified solution steps**.
+
+---
+
 # 🌊 Interference Patterns on a Water Surface
 
 ## 🎯 Motivation
@@ -5,24 +9,49 @@
 Interference occurs when waves from different sources meet and overlap. On a water surface, we can clearly see these effects when ripples from different points intersect. The resulting pattern helps us understand how waves **reinforce** or **cancel** each other out.
 
 Studying these patterns:
-- Makes wave physics visual and intuitive
-- Helps us learn about **wave phase**, **superposition**, and **wave behavior**
-- Can be used in real-world applications like acoustics, optics, and engineering
+
+* Makes wave physics visual and intuitive
+* Helps us learn about **wave phase**, **superposition**, and **wave behavior**
+* Can be used in real-world applications like acoustics, optics, and engineering
 
 ---
 
 ## 📌 Problem Statement
 
-We want to analyze interference patterns created by multiple **point wave sources** placed at the **vertices of a regular polygon** (like a triangle, square, or pentagon).
+We want to simulate the **interference pattern** formed by **multiple point wave sources** placed at the **corners of a regular polygon** (like a square or triangle).
 
-### A single circular wave is described by:
+Each source creates circular waves that spread across a surface. At each point on the surface, we’ll calculate the **combined wave effect** from all the sources using **wave equations** and **superposition**.
 
+---
 
-### 5. **Analyze Patterns**
-Observe regions of:
-- **Constructive interference** (waves add)
-- **Destructive interference** (waves cancel)
+## 📐 Formula for a Circular Wave
 
+To calculate the wave height (displacement) at any point on the surface, use:
+
+$$
+\text{Wave from 1 source:} \quad h_i(x, y) = A \cdot \cos(k \cdot r_i - \omega \cdot t + \phi)
+$$
+
+Where:
+
+* $A$ is the wave amplitude
+* $r_i = \sqrt{(x - x_i)^2 + (y - y_i)^2}$ is the distance from point $(x, y)$ to the source at $(x_i, y_i)$
+* $k = \frac{2\pi}{\lambda}$ is the wave number (related to wavelength $\lambda$)
+* $\omega = 2\pi f$ is the angular frequency (related to frequency $f$)
+* $\phi$ is the wave’s initial phase
+* $t$ is time
+
+---
+
+## 🔗 Superposition: Adding the Waves Together
+
+To find the **total wave height** at any point on the grid, we add the contributions from all sources:
+
+$$
+\text{Total wave:} \quad h_{\text{total}}(x, y) = \sum_{i=1}^{N} A \cdot \cos(k \cdot r_i - \omega \cdot t + \phi)
+$$
+
+---
 ### 6. **Visualize**
 We'll use Python + Matplotlib to simulate and visualize the interference.
 
