@@ -43,8 +43,10 @@ Where:
 
 To find the **total wave height** at any point on the grid, we add the contributions from all sources:
 
+Sure! Here's the formula:
+
 $$
-\text{Total wave:} \quad h_{\text{total}}(x, y) = \sum_{i=1}^{N} A \cdot \cos(k \cdot r_i - \omega \cdot t + \phi)
+\eta(x, y, t) = \frac{A}{\sqrt{r}} \cos(k r - \omega t + \phi)
 $$
 
 ---
