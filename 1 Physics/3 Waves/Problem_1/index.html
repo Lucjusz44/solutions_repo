@@ -6,13 +6,13 @@
 <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <link href="../../../img/favicon.ico" rel="shortcut icon"/>
-<title>Problem 1 - Physics and Mathematics</title>
+<title>🌊 Interference Patterns on a Water Surface - Physics and Mathematics</title>
 <link href="../../../css/theme.css" rel="stylesheet"/>
 <link href="../../../css/theme_extra.css" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" rel="stylesheet"/>
 <script>
         // Current page data
-        var mkdocs_page_name = "Problem 1";
+        var mkdocs_page_name = "\ud83c\udf0a Interference Patterns on a Water Surface";
         var mkdocs_page_input_path = "1 Physics/3 Waves/Problem_1.md";
         var mkdocs_page_url = null;
       </script>
@@ -64,31 +64,21 @@
 </li>
 <li class="toctree-l1 current"><a class="reference internal current">3 Waves</a>
 <ul class="current">
-<li class="toctree-l2 current"><a class="reference internal current" href="#">Problem 1</a>
+<li class="toctree-l2 current"><a class="reference internal current" href="#">🌊 Interference Patterns on a Water Surface</a>
 <ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="#problem-1-interference-patterns-on-a-water-surface">Problem 1: Interference Patterns on a Water Surface</a>
+<li class="toctree-l3"><a class="reference internal" href="#motivation">🎯 Motivation</a>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#motivation">Motivation:</a>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#task-breakdown">Task Breakdown:</a>
+<li class="toctree-l3"><a class="reference internal" href="#problem-statement">📌 Problem Statement</a>
 <ul>
-<li class="toctree-l4"><a class="reference internal" href="#1-select-a-regular-polygon">1. Select a Regular Polygon:</a>
+<li class="toctree-l4"><a class="reference internal" href="#a-single-circular-wave-is-described-by">A single circular wave is described by:</a>
 </li>
-<li class="toctree-l4"><a class="reference internal" href="#2-position-the-sources">2. Position the Sources:</a>
+<li class="toctree-l4"><a class="reference internal" href="#5-analyze-patterns">5. Analyze Patterns</a>
 </li>
-<li class="toctree-l4"><a class="reference internal" href="#3-wave-equations">3. Wave Equations:</a>
-</li>
-<li class="toctree-l4"><a class="reference internal" href="#4-superposition-of-waves">4. Superposition of Waves:</a>
-</li>
-<li class="toctree-l4"><a class="reference internal" href="#5-analyze-interference-patterns">5. Analyze Interference Patterns:</a>
-</li>
-<li class="toctree-l4"><a class="reference internal" href="#6-visualization">6. Visualization:</a>
+<li class="toctree-l4"><a class="reference internal" href="#6-visualize">6. Visualize</a>
 </li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#implementation-in-python">Implementation in Python:</a>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#key-features-of-the-code">Key Features of the Code:</a>
+<li class="toctree-l3"><a class="reference internal" href="#python-simulation">🧪 Python Simulation</a>
 </li>
 </ul>
 </li>
@@ -187,7 +177,7 @@
 <li><a aria-label="Docs" class="icon icon-home" href="../../.."></a></li>
 <li class="breadcrumb-item">1 Physics</li>
 <li class="breadcrumb-item">3 Waves</li>
-<li class="breadcrumb-item active">Problem 1</li>
+<li class="breadcrumb-item active">🌊 Interference Patterns on a Water Surface</li>
 <li class="wy-breadcrumbs-aside">
 </li>
 </ul>
@@ -195,142 +185,75 @@
 </div>
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
-<h1 id="problem-1">Problem 1</h1>
-<h3 id="problem-1-interference-patterns-on-a-water-surface">Problem 1: Interference Patterns on a Water Surface</h3>
-<h3 id="motivation">Motivation:</h3>
-<p>Interference patterns form when waves from different sources overlap, creating new wave patterns on a surface. On water, this can be easily observed when ripples from different points meet and combine. Depending on their phase relationship, the waves may either reinforce (constructive interference) or cancel each other out (destructive interference). This concept helps us visualize wave behavior, understand phase relationships, and provides insight into real-world applications such as sound waves, electromagnetic waves, and water ripples.</p>
-<h3 id="task-breakdown">Task Breakdown:</h3>
-<h4 id="1-select-a-regular-polygon">1. <strong>Select a Regular Polygon:</strong></h4>
-<p>We begin by selecting a regular polygon (for example, an equilateral triangle, square, or pentagon) where point sources of waves will be placed at the vertices.</p>
-<h4 id="2-position-the-sources">2. <strong>Position the Sources:</strong></h4>
-<p>We then place wave sources at the vertices of the polygon, assuming that each source emits a wave with the same amplitude, wavelength, and frequency. </p>
-<h4 id="3-wave-equations">3. <strong>Wave Equations:</strong></h4>
-<p>Each point source emits a wave that can be described by the equation for a circular wave in the water surface. The displacement at a point <span class="arithmatex">\((x, y)\)</span> on the water surface due to a point source at <span class="arithmatex">\((x_i, y_i)\)</span> is given by:</p>
-<div class="arithmatex">\[
-\text{Displacement} = A \cos(k r - \omega t + \phi)
-\]</div>
-<p>Where:
-- <span class="arithmatex">\(A\)</span> is the amplitude,
-- <span class="arithmatex">\(k = \frac{2\pi}{\lambda}\)</span> is the wave number,
-- <span class="arithmatex">\(\lambda\)</span> is the wavelength,
-- <span class="arithmatex">\(r = \sqrt{(x - x_i)^2 + (y - y_i)^2}\)</span> is the distance from the source to the point,
-- <span class="arithmatex">\(\omega = 2\pi f\)</span> is the angular frequency,
-- <span class="arithmatex">\(f\)</span> is the frequency, and
-- <span class="arithmatex">\(\phi\)</span> is the initial phase of the wave.</p>
-<h4 id="4-superposition-of-waves">4. <strong>Superposition of Waves:</strong></h4>
-<p>The principle of superposition states that the total displacement at any point is the sum of the displacements from each source. Therefore, for <span class="arithmatex">\(N\)</span> sources placed at the vertices of the polygon, the total displacement is:</p>
-<div class="arithmatex">\[
-\text{Total Displacement} = \sum_{i=1}^{N} A \cos(k r_i - \omega t + \phi)
-\]</div>
-<p>Where <span class="arithmatex">\(r_i\)</span> is the distance from the <span class="arithmatex">\(i\)</span>-th source to the point <span class="arithmatex">\((x, y)\)</span>.</p>
-<h4 id="5-analyze-interference-patterns">5. <strong>Analyze Interference Patterns:</strong></h4>
-<p>The superimposed wave function will exhibit regions of constructive interference (where the displacements add up to amplify the wave) and destructive interference (where the displacements cancel each other out). By analyzing this, we can understand the pattern of wave interaction.</p>
-<h4 id="6-visualization">6. <strong>Visualization:</strong></h4>
-<p>We can visualize the interference patterns by plotting the total displacement at each point on a grid, where the x and y axes represent spatial coordinates on the water surface.</p>
+<h1 id="interference-patterns-on-a-water-surface">🌊 Interference Patterns on a Water Surface</h1>
+<h2 id="motivation">🎯 Motivation</h2>
+<p>Interference occurs when waves from different sources meet and overlap. On a water surface, we can clearly see these effects when ripples from different points intersect. The resulting pattern helps us understand how waves <strong>reinforce</strong> or <strong>cancel</strong> each other out.</p>
+<p>Studying these patterns:
+- Makes wave physics visual and intuitive
+- Helps us learn about <strong>wave phase</strong>, <strong>superposition</strong>, and <strong>wave behavior</strong>
+- Can be used in real-world applications like acoustics, optics, and engineering</p>
 <hr/>
-<h3 id="implementation-in-python">Implementation in Python:</h3>
-<p>Below is the Python code to simulate and visualize the interference patterns caused by multiple point sources located at the vertices of a regular polygon (e.g., square). This simulation assumes that all sources emit waves with the same parameters.</p>
-<pre><code class="language-python">import numpy as np
-import matplotlib.pyplot as plt
-
-# Constants
-A = 1           # Amplitude of the wave
-lambda_ = 1     # Wavelength
-f = 1           # Frequency
-omega = 2 * np.pi * f  # Angular frequency
-k = 2 * np.pi / lambda_  # Wave number
-phi = 0         # Initial phase of the wave
-radius = 5      # Radius of the circle where the sources are placed
-num_sources = 4 # Number of sources (e.g., 4 for a square)
-grid_size = 200  # Grid size for the plot (increase for higher resolution)
-
-# Create a grid of points (x, y)
-x = np.linspace(-10, 10, grid_size)
+<h2 id="problem-statement">📌 Problem Statement</h2>
+<p>We want to analyze interference patterns created by multiple <strong>point wave sources</strong> placed at the <strong>vertices of a regular polygon</strong> (like a triangle, square, or pentagon).</p>
+<h3 id="a-single-circular-wave-is-described-by">A single circular wave is described by:</h3>
+<h3 id="5-analyze-patterns">5. <strong>Analyze Patterns</strong></h3>
+<p>Observe regions of:
+- <strong>Constructive interference</strong> (waves add)
+- <strong>Destructive interference</strong> (waves cancel)</p>
+<h3 id="6-visualize">6. <strong>Visualize</strong></h3>
+<p>We'll use Python + Matplotlib to simulate and visualize the interference.</p>
+<hr/>
+<h2 id="python-simulation">🧪 Python Simulation</h2>
+<p>```python
+import numpy as np
+import matplotlib.pyplot as plt</p>
+<h1 id="wave-parameters">Wave parameters</h1>
+<p>A = 1
+lambda_ = 1
+f = 1
+omega = 2 * np.pi * f
+k = 2 * np.pi / lambda_
+phi = 0
+radius = 5
+num_sources = 4  # square
+grid_size = 200</p>
+<h1 id="grid">Grid</h1>
+<p>x = np.linspace(-10, 10, grid_size)
 y = np.linspace(-10, 10, grid_size)
-X, Y = np.meshgrid(x, y)
-
-# Calculate the coordinates of the sources (vertices of the regular polygon)
-theta = np.linspace(0, 2 * np.pi, num_sources, endpoint=False)
+X, Y = np.meshgrid(x, y)</p>
+<h1 id="source-positions-square-shape">Source positions (square shape)</h1>
+<p>theta = np.linspace(0, 2 * np.pi, num_sources, endpoint=False)
 source_x = radius * np.cos(theta)
-source_y = radius * np.sin(theta)
-
-# Function to calculate wave displacement at a point (x, y) due to a source
-def wave_displacement(x, y, source_x, source_y, A, k, omega, t, phi):
-    r = np.sqrt((x - source_x)**2 + (y - source_y)**2)  # Distance from the source
-    return A * np.cos(k * r - omega * t + phi)  # Wave displacement equation
-
-# Create a grid to store the displacement
-displacement = np.zeros_like(X)
-
-# Time
-t = 0
-
-# Calculate the total displacement due to all sources using superposition
+source_y = radius * np.sin(theta)</p>
+<h1 id="time-snapshot">Time snapshot</h1>
+<p>t = 0</p>
+<h1 id="wave-function">Wave function</h1>
+<p>def wave(x, y, sx, sy):
+    r = np.sqrt((x - sx)<strong>2 + (y - sy)</strong>2)
+    return A * np.cos(k * r - omega * t + phi)</p>
+<h1 id="total-wave-from-all-sources">Total wave from all sources</h1>
+<p>total = np.zeros_like(X)
 for i in range(num_sources):
-    displacement += wave_displacement(X, Y, source_x[i], source_y[i], A, k, omega, t, phi)
-
-# Plotting the interference pattern
-plt.figure(figsize=(10, 8))
-plt.contourf(X, Y, displacement, cmap='twilight', levels=100)  # Contour plot with twilight colormap
-plt.colorbar(label="Wave Displacement", pad=0.01, aspect=10)  # Color bar
-
-# Plot sources as bright markers (bigger and highlighted)
-plt.scatter(source_x, source_y, color="yellow", edgecolors="black", s=100, label="Wave Sources", zorder=5)
-
-# Add title and labels with improved font style
-plt.title("Interference Pattern on a Water Surface", fontsize=16, fontweight='bold')
-plt.xlabel("X Position (Units)", fontsize=12)
-plt.ylabel("Y Position (Units)", fontsize=12)
-
-# Grid and axis customization
-plt.grid(True, which='both', linestyle='--', linewidth=0.5, color='gray', alpha=0.7)
-plt.axhline(0, color='black',linewidth=1)
-plt.axvline(0, color='black',linewidth=1)
-
-# Add a legend with a customized style
-plt.legend(fontsize=12, frameon=True, facecolor='white', edgecolor='black')
-
-# Add a subtitle explaining the plot
-plt.figtext(0.5, 0.02, "This plot shows the interference pattern formed by waves from a regular polygon of sources.", 
-            ha="center", fontsize=12, color='darkslategray')
-
-# Show the plot
-plt.tight_layout()
+    total += wave(X, Y, source_x[i], source_y[i])
+plt.figure(figsize=(8, 6))
+plt.imshow(total, extent=[-10, 10, -10, 10], cmap='coolwarm', origin='lower')
+plt.colorbar(label='Wave Displacement')
+plt.scatter(source_x, source_y, color='yellow', edgecolors='black', s=100, label='Sources')
+plt.title("Interference Pattern (Heatmap)", fontsize=14)
+plt.xlabel("X")
+plt.ylabel("Y")
+plt.grid(True, linestyle='--', alpha=0.3)
+plt.legend()
 plt.show()
-</code></pre>
-<p><img alt="alt text" src="../image.png"/></p>
-<h3 id="key-features-of-the-code">Key Features of the Code:</h3>
-<ol>
-<li><strong>Grid Creation</strong>: </li>
-<li>
-<p>A mesh grid is created over a specified range of x and y values. This represents the water surface where the interference pattern will be plotted.</p>
-</li>
-<li>
-<p><strong>Wave Function</strong>: </p>
-</li>
-<li>The displacement due to each source is calculated based on the wave equation.</li>
-<li>
-<p>The distance between each point on the grid and the source is calculated to determine the wave displacement.</p>
-</li>
-<li>
-<p><strong>Superposition</strong>: </p>
-</li>
-<li>
-<p>The total wave displacement is calculated by summing the contributions from each point source.</p>
-</li>
-<li>
-<p><strong>Visualization</strong>: </p>
-</li>
-<li>The <code>contourf</code> function is used to plot the interference pattern, which is color-coded to show regions of constructive and destructive interference.</li>
-<li>
-<p>The sources are marked as yellow points for clear identification.</p>
-</li>
-<li>
-<p><strong>Customization</strong>:</p>
-</li>
-<li>The plot is customized with labels, grid lines, legends, and a color bar for better clarity and aesthetics.</li>
-</ol>
-<hr/>
+plt.figure(figsize=(8, 6))
+plt.contour(X, Y, total, levels=20, cmap='plasma')
+plt.scatter(source_x, source_y, color='yellow', edgecolors='black', s=100)
+plt.title("Contour Lines of Wave Interference")
+plt.xlabel("X")
+plt.ylabel("Y")
+plt.grid(True, linestyle='--', alpha=0.3)
+plt.show()
+<img alt="alt text" src="../image-1.png"/></p>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
