@@ -6,13 +6,13 @@
 <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <link href="../../../img/favicon.ico" rel="shortcut icon"/>
-<title>🌊 Interference Patterns on a Water Surface - Physics and Mathematics</title>
+<title>Problem 1 - Physics and Mathematics</title>
 <link href="../../../css/theme.css" rel="stylesheet"/>
 <link href="../../../css/theme_extra.css" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" rel="stylesheet"/>
 <script>
         // Current page data
-        var mkdocs_page_name = "\ud83c\udf0a Interference Patterns on a Water Surface";
+        var mkdocs_page_name = "Problem 1";
         var mkdocs_page_input_path = "1 Physics/3 Waves/Problem_1.md";
         var mkdocs_page_url = null;
       </script>
@@ -64,16 +64,16 @@
 </li>
 <li class="toctree-l1 current"><a class="reference internal current">3 Waves</a>
 <ul class="current">
-<li class="toctree-l2 current"><a class="reference internal current" href="#">🌊 Interference Patterns on a Water Surface</a>
+<li class="toctree-l2 current"><a class="reference internal current" href="#">Problem 1</a>
 <ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="#motivation">🎯 Motivation</a>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#problem-statement">📌 Problem Statement</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#formula-for-a-circular-wave">📐 Formula for a Circular Wave</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#superposition-adding-the-waves-together">🔗 Superposition: Adding the Waves Together</a>
 <ul>
-<li class="toctree-l4"><a class="reference internal" href="#a-single-circular-wave-is-described-by">A single circular wave is described by:</a>
-</li>
-<li class="toctree-l4"><a class="reference internal" href="#5-analyze-patterns">5. Analyze Patterns</a>
-</li>
 <li class="toctree-l4"><a class="reference internal" href="#6-visualize">6. Visualize</a>
 </li>
 </ul>
@@ -177,7 +177,7 @@
 <li><a aria-label="Docs" class="icon icon-home" href="../../.."></a></li>
 <li class="breadcrumb-item">1 Physics</li>
 <li class="breadcrumb-item">3 Waves</li>
-<li class="breadcrumb-item active">🌊 Interference Patterns on a Water Surface</li>
+<li class="breadcrumb-item active">Problem 1</li>
 <li class="wy-breadcrumbs-aside">
 </li>
 </ul>
@@ -185,21 +185,43 @@
 </div>
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
+<p>Got it! Here's the improved and <strong>complete version</strong> that keeps your original <strong>Motivation</strong> exactly as it is, while adding the <strong>missing formulas, problem statement, explanation, and simplified solution steps</strong>.</p>
+<hr/>
 <h1 id="interference-patterns-on-a-water-surface">🌊 Interference Patterns on a Water Surface</h1>
 <h2 id="motivation">🎯 Motivation</h2>
 <p>Interference occurs when waves from different sources meet and overlap. On a water surface, we can clearly see these effects when ripples from different points intersect. The resulting pattern helps us understand how waves <strong>reinforce</strong> or <strong>cancel</strong> each other out.</p>
-<p>Studying these patterns:
-- Makes wave physics visual and intuitive
-- Helps us learn about <strong>wave phase</strong>, <strong>superposition</strong>, and <strong>wave behavior</strong>
-- Can be used in real-world applications like acoustics, optics, and engineering</p>
+<p>Studying these patterns:</p>
+<ul>
+<li>Makes wave physics visual and intuitive</li>
+<li>Helps us learn about <strong>wave phase</strong>, <strong>superposition</strong>, and <strong>wave behavior</strong></li>
+<li>Can be used in real-world applications like acoustics, optics, and engineering</li>
+</ul>
 <hr/>
 <h2 id="problem-statement">📌 Problem Statement</h2>
-<p>We want to analyze interference patterns created by multiple <strong>point wave sources</strong> placed at the <strong>vertices of a regular polygon</strong> (like a triangle, square, or pentagon).</p>
-<h3 id="a-single-circular-wave-is-described-by">A single circular wave is described by:</h3>
-<h3 id="5-analyze-patterns">5. <strong>Analyze Patterns</strong></h3>
-<p>Observe regions of:
-- <strong>Constructive interference</strong> (waves add)
-- <strong>Destructive interference</strong> (waves cancel)</p>
+<p>We want to simulate the <strong>interference pattern</strong> formed by <strong>multiple point wave sources</strong> placed at the <strong>corners of a regular polygon</strong> (like a square or triangle).</p>
+<p>Each source creates circular waves that spread across a surface. At each point on the surface, we’ll calculate the <strong>combined wave effect</strong> from all the sources using <strong>wave equations</strong> and <strong>superposition</strong>.</p>
+<hr/>
+<h2 id="formula-for-a-circular-wave">📐 Formula for a Circular Wave</h2>
+<p>To calculate the wave height (displacement) at any point on the surface, use:</p>
+<div class="arithmatex">\[
+\text{Wave from 1 source:} \quad h_i(x, y) = A \cdot \cos(k \cdot r_i - \omega \cdot t + \phi)
+\]</div>
+<p>Where:</p>
+<ul>
+<li><span class="arithmatex">\(A\)</span> is the wave amplitude</li>
+<li><span class="arithmatex">\(r_i = \sqrt{(x - x_i)^2 + (y - y_i)^2}\)</span> is the distance from point <span class="arithmatex">\((x, y)\)</span> to the source at <span class="arithmatex">\((x_i, y_i)\)</span></li>
+<li><span class="arithmatex">\(k = \frac{2\pi}{\lambda}\)</span> is the wave number (related to wavelength <span class="arithmatex">\(\lambda\)</span>)</li>
+<li><span class="arithmatex">\(\omega = 2\pi f\)</span> is the angular frequency (related to frequency <span class="arithmatex">\(f\)</span>)</li>
+<li><span class="arithmatex">\(\phi\)</span> is the wave’s initial phase</li>
+<li><span class="arithmatex">\(t\)</span> is time</li>
+</ul>
+<hr/>
+<h2 id="superposition-adding-the-waves-together">🔗 Superposition: Adding the Waves Together</h2>
+<p>To find the <strong>total wave height</strong> at any point on the grid, we add the contributions from all sources:</p>
+<div class="arithmatex">\[
+\text{Total wave:} \quad h_{\text{total}}(x, y) = \sum_{i=1}^{N} A \cdot \cos(k \cdot r_i - \omega \cdot t + \phi)
+\]</div>
+<hr/>
 <h3 id="6-visualize">6. <strong>Visualize</strong></h3>
 <p>We'll use Python + Matplotlib to simulate and visualize the interference.</p>
 <hr/>
