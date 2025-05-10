@@ -257,57 +257,58 @@ r = \frac{mv_{\perp}}{qB}
 <h3 id="python-code"><strong>Python Code</strong>:</h3>
 <pre><code class="language-python">import numpy as np
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 
-# Constants
-q = 1.6e-19  # Charge of particle (Coulombs)
-m = 9.11e-31  # Mass of particle (kg)
-E = np.array([0, 0])  # Electric field (V/m) [no electric field in this example]
-B = np.array([0, 0, 1])  # Magnetic field (T), along the z-axis
-v_initial = np.array([1e5, 0])  # Initial velocity (m/s)
-r_initial = np.array([0, 0])  # Initial position (m)
+# -----------------------
+# ⚙️ Parameters
+# -----------------------
+q = 1.0         # Charge
+m = 1.0         # Mass
+B = np.array([0, 0, 1.0])  # Magnetic field along z-axis
+E = np.array([0.0, 0.0, 0.0])  # No electric field
 
-# Time parameters
-t_max = 1e-6  # Maximum time (s)
-dt = 1e-9  # Time step (s)
-time_steps = int(t_max / dt)
+r = np.array([0.0, 0.0, 0.0])  # Initial position
+v = np.array([1.0, 0.0, 2.0])  # Initial velocity (x: circular, z: helical)
 
-# Initialize position and velocity
-r = r_initial
-v = v_initial
+dt = 0.01
+T = 10
+steps = int(T / dt)
 
-# Store the particle trajectory
-trajectory = []
-
-# Function to calculate Lorentz force and update velocity and position
+# -----------------------
+# 🔁 Lorentz Force
+# -----------------------
 def lorentz_force(v, r, q, m, E, B):
-    # Lorentz force F = q(E + v x B)
-    v_cross_B = np.cross(v, B)  # Cross product v x B
-    F = q * (E + v_cross_B)  # Total force
-    a = F / m  # Acceleration (F = ma)
-    return a
+    return (q / m) * (E + np.cross(v, B))
 
-# Simulate the particle motion
-for t in range(time_steps):
-    a = lorentz_force(v, r, q, m, E, B)
-    v += a * dt  # Update velocity (v = v + a * dt)
-    r += v * dt  # Update position (r = r + v * dt)
+# -----------------------
+# 🧮 Simulate
+# -----------------------
+trajectory = []
+for _ in range(steps):
     trajectory.append(r.copy())
-
-# Convert trajectory to numpy array for easier plotting
+    a = lorentz_force(v, r, q, m, E, B)
+    v += a * dt
+    r += v * dt
 trajectory = np.array(trajectory)
 
-# Plotting the particle's trajectory
-plt.figure(figsize=(8, 6))
-plt.plot(trajectory[:, 0], trajectory[:, 1], label='Particle Path', color='blue')
-plt.scatter(0, 0, color='red', label='Initial Position')  # Starting point
-plt.title("Particle Trajectory in a Magnetic Field", fontsize=14)
-plt.xlabel("X Position (m)")
-plt.ylabel("Y Position (m)")
-plt.grid(True, linestyle='--', alpha=0.5)
-plt.legend()
+# -----------------------
+# 📊 3D Plot
+# -----------------------
+fig = plt.figure(figsize=(10, 7))
+ax = fig.add_subplot(111, projection='3d')
+ax.plot(trajectory[:, 0], trajectory[:, 1], trajectory[:, 2], color='blue', label='Trajectory')
+ax.scatter(trajectory[0, 0], trajectory[0, 1], trajectory[0, 2], color='green', s=60, label='Start')
+ax.set_title("Helical Motion in Magnetic Field", fontsize=14)
+ax.set_xlabel("X")
+ax.set_ylabel("Y")
+ax.set_zlabel("Z")
+ax.grid(True)
+ax.legend()
+ax.view_init(elev=25, azim=60)
+plt.tight_layout()
 plt.show()
 </code></pre>
-<hr/>
+<h2 id="_1"><img alt="alt text" src="../image-2.png"/></h2>
 <p>This code simulates the motion of a charged particle in a uniform magnetic field and visualizes its trajectory. The plot will show how the particle moves in a circular path due to the Lorentz force.</p>
 </div>
 </div><footer>
