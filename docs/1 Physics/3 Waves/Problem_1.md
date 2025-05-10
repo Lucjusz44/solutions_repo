@@ -59,55 +59,62 @@ We'll use Python + Matplotlib to simulate and visualize the interference.
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Wave parameters
-A = 1
-lambda_ = 1
-f = 1
-omega = 2 * np.pi * f
-k = 2 * np.pi / lambda_
-phi = 0
-radius = 5
-num_sources = 4  # square
-grid_size = 200
+# 🌊 Wave Parameters
+A = 1               # Amplitude of the wave
+lambda_ = 1         # Wavelength (distance between peaks)
+f = 1               # Frequency (how many waves per second)
+omega = 2 * np.pi * f # Angular frequency
+k = 2 * np.pi / lambda_  # Wave number
+phi = 0             # Initial phase (same for all waves)
 
-# Grid
-x = np.linspace(-10, 10, grid_size)
-y = np.linspace(-10, 10, grid_size)
-X, Y = np.meshgrid(x, y)
+# 📐 Polygon Parameters
+radius = 5          # Distance from the center to each source (polygon size)
+num_sources = 4     # Number of wave sources (e.g., 4 for a square)
+grid_size = 200     # Resolution of the grid for the water surface visualization
 
-# Source positions (square shape)
-theta = np.linspace(0, 2 * np.pi, num_sources, endpoint=False)
-source_x = radius * np.cos(theta)
-source_y = radius * np.sin(theta)
+# 🎯 Create a Grid for the Water Surface
+x = np.linspace(-10, 10, grid_size)  # X-axis range
+y = np.linspace(-10, 10, grid_size)  # Y-axis range
+X, Y = np.meshgrid(x, y)  # Creating a mesh grid for the surface
 
-# Time snapshot
-t = 0
+# 📍 Source Positions (Placed at the Vertices of a Regular Polygon)
+theta = np.linspace(0, 2 * np.pi, num_sources, endpoint=False)  # Angle positions of the sources
+source_x = radius * np.cos(theta)  # X coordinates of sources
+source_y = radius * np.sin(theta)  # Y coordinates of sources
 
-# Wave function
+# ⏰ Time Snapshot (Static pattern)
+t = 0  # Fixed time to visualize the pattern
+
+# 🌊 Wave Function - Describes the wave at a given point (X, Y)
 def wave(x, y, sx, sy):
-    r = np.sqrt((x - sx)**2 + (y - sy)**2)
-    return A * np.cos(k * r - omega * t + phi)
+    r = np.sqrt((x - sx)**2 + (y - sy)**2)  # Distance from source to the point
+    return A * np.cos(k * r - omega * t + phi)  # Wave equation: displacement based on distance
 
-# Total wave from all sources
-total = np.zeros_like(X)
+# 🌊 Total Wave from All Sources (Superposition Principle)
+total = np.zeros_like(X)  # Initialize the grid for total displacement
 for i in range(num_sources):
-    total += wave(X, Y, source_x[i], source_y[i])
+    total += wave(X, Y, source_x[i], source_y[i])  # Adding waves from all sources
+
+# 🌈 Heatmap Visualization of the Interference Pattern
 plt.figure(figsize=(8, 6))
-plt.imshow(total, extent=[-10, 10, -10, 10], cmap='coolwarm', origin='lower')
-plt.colorbar(label='Wave Displacement')
-plt.scatter(source_x, source_y, color='yellow', edgecolors='black', s=100, label='Sources')
-plt.title("Interference Pattern (Heatmap)", fontsize=14)
-plt.xlabel("X")
-plt.ylabel("Y")
-plt.grid(True, linestyle='--', alpha=0.3)
-plt.legend()
+plt.imshow(total, extent=[-10, 10, -10, 10], cmap='coolwarm', origin='lower')  # Heatmap of wave displacement
+plt.colorbar(label='Wave Displacement')  # Color bar to show the displacement range
+plt.scatter(source_x, source_y, color='yellow', edgecolors='black', s=100, label='Sources')  # Mark sources
+plt.title("Interference Pattern (Heatmap)", fontsize=14)  # Plot title
+plt.xlabel("X Position")  # X-axis label
+plt.ylabel("Y Position")  # Y-axis label
+plt.grid(True, linestyle='--', alpha=0.3)  # Grid with dashed lines
+plt.legend()  # Display the legend
 plt.show()
+
+# 🌀 Contour Plot of Wave Interference (Show regions of constructive/destructive interference)
 plt.figure(figsize=(8, 6))
-plt.contour(X, Y, total, levels=20, cmap='plasma')
-plt.scatter(source_x, source_y, color='yellow', edgecolors='black', s=100)
-plt.title("Contour Lines of Wave Interference")
-plt.xlabel("X")
-plt.ylabel("Y")
-plt.grid(True, linestyle='--', alpha=0.3)
+plt.contour(X, Y, total, levels=20, cmap='plasma')  # Contour plot with wave levels
+plt.scatter(source_x, source_y, color='yellow', edgecolors='black', s=100)  # Mark sources
+plt.title("Contour Lines of Wave Interference", fontsize=14)  # Plot title
+plt.xlabel("X Position")  # X-axis label
+plt.ylabel("Y Position")  # Y-axis label
+plt.grid(True, linestyle='--', alpha=0.3)  # Grid with dashed lines
 plt.show()
+
 ![alt text](image-1.png)
