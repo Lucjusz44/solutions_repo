@@ -138,18 +138,3 @@ plt.show()
 * **Uncertainty in mean (std / √10):** 0.011 seconds
 
 ---
-
-Let me know if you want the final calculation of gravitational acceleration $g$ from this data, with uncertainty propagation too!
-
-
----
-
-## Discussion
-
-* The **measurement resolution** impacts the length uncertainty $u_L$.
-* Variations in timing (due to reaction times, stopwatch resolution) contribute to uncertainty $u_t$.
-* The simple pendulum approximation holds best for small angles (<15°).
-* Results are consistent with the accepted value of $g$, demonstrating a successful experiment with quantified uncertainty.
-* Improvements could include electronic timing and repeated measurements for better precision.
-
----
