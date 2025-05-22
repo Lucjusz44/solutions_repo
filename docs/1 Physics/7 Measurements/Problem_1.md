@@ -116,12 +116,6 @@ plt.show()
 ## Tabulated Data Summary
 
 
-Ah, got you now. Here's the corrected version with **all 10 time values listed explicitly** — no ellipsis. Clean and clear:
-
----
-
-### 🧪 Pendulum Experiment Results
-
 | Quantity                                  | Value                                                      | Uncertainty | Unit |
 | ----------------------------------------- | ---------------------------------------------------------- | ----------- | ---- |
 | Pendulum length $L$                       | 1.000                                                      | ± 0.005     | m    |
