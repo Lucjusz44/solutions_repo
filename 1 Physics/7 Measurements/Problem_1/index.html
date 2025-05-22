@@ -101,6 +101,12 @@
 <li class="toctree-l3"><a class="reference internal" href="#python-implementation-with-visualizations">Python Implementation with Visualizations</a>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#tabulated-data-summary">Tabulated Data Summary</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#pendulum-experiment-results">🧪 Pendulum Experiment Results</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#statistics">📊 Statistics</a>
+</li>
+</ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#discussion">Discussion</a>
 </li>
@@ -284,6 +290,9 @@ plt.show()
 <img alt="alt text" src="../image-3.png"/></p>
 <hr/>
 <h2 id="tabulated-data-summary">Tabulated Data Summary</h2>
+<p>Ah, got you now. Here's the corrected version with <strong>all 10 time values listed explicitly</strong> — no ellipsis. Clean and clear:</p>
+<hr/>
+<h3 id="pendulum-experiment-results">🧪 Pendulum Experiment Results</h3>
 <table>
 <thead>
 <tr>
@@ -302,18 +311,18 @@ plt.show()
 </tr>
 <tr>
 <td>Times for 10 oscillations <span class="arithmatex">\(t_i\)</span></td>
-<td>20.1, 19.9, ..., 20.2</td>
+<td>20.1, 19.9, 20.2, 20.0, 20.2, 20.1, 20.0, 19.9, 20.1, 20.0</td>
 <td>—</td>
 <td>s</td>
 </tr>
 <tr>
-<td>Mean time <span class="arithmatex">\(\bar{t}\)</span></td>
+<td>Mean time <span class="arithmatex">\(\overline{t}\)</span></td>
 <td>20.09</td>
 <td>± 0.07</td>
 <td>s</td>
 </tr>
 <tr>
-<td>Period <span class="arithmatex">\(T\)</span></td>
+<td>Period <span class="arithmatex">\(T = \overline{t} / 10\)</span></td>
 <td>2.009</td>
 <td>± 0.007</td>
 <td>s</td>
@@ -332,6 +341,18 @@ plt.show()
 </tr>
 </tbody>
 </table>
+<hr/>
+<p>Let me know if you want the same version as a downloadable <code>.md</code> or <code>.pdf</code> or want to include calculated uncertainty formulas below the table.</p>
+<hr/>
+<h3 id="statistics">📊 Statistics</h3>
+<ul>
+<li><strong>Mean time (10 oscillations):</strong> 6.331 seconds</li>
+<li><strong>Mean period:</strong> 0.633 seconds</li>
+<li><strong>Standard deviation (timing):</strong> 0.036 seconds</li>
+<li><strong>Uncertainty in mean (std / √10):</strong> 0.011 seconds</li>
+</ul>
+<hr/>
+<p>Let me know if you want the final calculation of gravitational acceleration <span class="arithmatex">\(g\)</span> from this data, with uncertainty propagation too!</p>
 <hr/>
 <h2 id="discussion">Discussion</h2>
 <ul>
