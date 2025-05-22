@@ -6,30 +6,21 @@ The **Central Limit Theorem (CLT)** says:
 
 > If you take many samples of size **n** from any population, the distribution of their **means** will tend to look **normal**, as **n gets large** — even if the original population is not normal.
 
----
-
-## ⚙️ Setup
 
 ```python
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# Style
+# Settings
 sns.set(style="whitegrid")
 np.random.seed(42)
 
-# Simulation parameters
 pop_size = 100_000
-sample_sizes = [5, 10, 30, 50]
+sample_sizes = [10]
 n_samples = 1000
-```
 
----
-
-## 📦 CLT Simulator
-
-```python
+# Simulation function
 def simulate_clt(population, title):
     for size in sample_sizes:
         sample_means = [np.mean(np.random.choice(population, size=size)) for _ in range(n_samples)]
@@ -43,31 +34,14 @@ def simulate_clt(population, title):
         plt.legend()
         plt.tight_layout()
         plt.show()
-```
 
----
-
-## 🟩 Uniform Distribution
-
-```python
+# Run simulations
 uniform_pop = np.random.uniform(0, 100, size=pop_size)
 simulate_clt(uniform_pop, "Uniform Distribution")
-```
 
----
-
-## 🔶 Exponential Distribution
-
-```python
 exp_pop = np.random.exponential(scale=50, size=pop_size)
 simulate_clt(exp_pop, "Exponential Distribution")
-```
 
----
-
-## 🎲 Binomial Distribution
-
-```python
 binom_pop = np.random.binomial(n=10, p=0.5, size=pop_size)
 simulate_clt(binom_pop, "Binomial Distribution")
 ```
