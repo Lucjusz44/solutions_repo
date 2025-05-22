@@ -6,13 +6,13 @@
 <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <link href="../../../img/favicon.ico" rel="shortcut icon"/>
-<title>Problem 1 - Physics and Mathematics</title>
+<title>🧪 Central Limit Theorem: Simulation &amp; Insights - Physics and Mathematics</title>
 <link href="../../../css/theme.css" rel="stylesheet"/>
 <link href="../../../css/theme_extra.css" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" rel="stylesheet"/>
 <script>
         // Current page data
-        var mkdocs_page_name = "Problem 1";
+        var mkdocs_page_name = "\ud83e\uddea Central Limit Theorem: Simulation \u0026amp; Insights";
         var mkdocs_page_input_path = "1 Physics/6 Statistics/Problem_1.md";
         var mkdocs_page_url = null;
       </script>
@@ -82,8 +82,24 @@
 </li>
 <li class="toctree-l1 current"><a class="reference internal current">6 Statistics</a>
 <ul class="current">
-<li class="toctree-l2 current"><a class="reference internal current" href="#">Problem 1</a>
+<li class="toctree-l2 current"><a class="reference internal current" href="#">🧪 Central Limit Theorem: Simulation &amp; Insights</a>
 <ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="#whats-the-clt">🧠 What’s the CLT?</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#setup">⚙️ Setup</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#clt-simulator">📦 CLT Simulator</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#uniform-distribution">🟩 Uniform Distribution</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#exponential-distribution">🔶 Exponential Distribution</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#binomial-distribution">🎲 Binomial Distribution</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#what-did-we-learn">🔍 What Did We Learn?</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#applications">💼 Applications</a>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../Problem_2/">Problem 2</a>
@@ -163,7 +179,7 @@
 <li><a aria-label="Docs" class="icon icon-home" href="../../.."></a></li>
 <li class="breadcrumb-item">1 Physics</li>
 <li class="breadcrumb-item">6 Statistics</li>
-<li class="breadcrumb-item active">Problem 1</li>
+<li class="breadcrumb-item active">🧪 Central Limit Theorem: Simulation &amp; Insights</li>
 <li class="wy-breadcrumbs-aside">
 </li>
 </ul>
@@ -171,109 +187,73 @@
 </div>
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
-<h1 id="problem-1">Problem 1</h1>
-<h1 id="central-limit-theorem-visual-magic-in-statistics">📊 <strong>Central Limit Theorem: Visual Magic in Statistics!</strong></h1>
-<h2 id="what-is-clt"><strong>🎲 What is CLT?</strong></h2>
-<p><strong>"No matter how weird your data looks, average enough of it → becomes normal!"</strong> </p>
-<p>✅ <strong>Works for ANY distribution</strong> (uniform, exponential, even weird shapes!)<br/>
-✅ <strong>Bigger samples = More perfect bell curve</strong> </p>
+<h1 id="central-limit-theorem-simulation-insights">🧪 Central Limit Theorem: Simulation &amp; Insights</h1>
+<h2 id="whats-the-clt">🧠 What’s the CLT?</h2>
+<p>The <strong>Central Limit Theorem (CLT)</strong> says:</p>
+<blockquote>
+<p>If you take many samples of size <strong>n</strong> from any population, the distribution of their <strong>means</strong> will tend to look <strong>normal</strong>, as <strong>n gets large</strong> — even if the original population is not normal.</p>
+</blockquote>
 <hr/>
-<h2 id="lets-simulate-it-python-code"><strong>💻 Let's Simulate It! (Python Code)</strong></h2>
+<h2 id="setup">⚙️ Setup</h2>
 <pre><code class="language-python">import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# Set up 3 crazy different distributions
-distributions = {
-    "Uniform": np.random.uniform(0, 10, 100000),       # Flat like a table
-    "Exponential": np.random.exponential(1, 100000),    # Skewed like a slide
-    "Weird Mix": 0.5*np.random.normal(5,1,100000) + 0.5*np.random.poisson(3,100000)  # Frankenstein data!
-}
+# Style
+sns.set(style="whitegrid")
+np.random.seed(42)
 
-# Sampling settings
-sample_sizes = [5, 10, 30, 50]  # Try different sizes!
-n_samples = 1000  # Number of sample means to calculate
-
-plt.figure(figsize=(15,10))
-for i, (name, population) in enumerate(distributions.items()):
-    for j, n in enumerate(sample_sizes):
-        # Calculate 1000 sample means
-        sample_means = [np.mean(np.random.choice(population, n)) for _ in range(n_samples)]
-
-        # Plot
-        plt.subplot(3, 4, i*4 + j + 1)
-        sns.histplot(sample_means, kde=True, color='skyblue')
-        plt.title(f"{name}\nn={n}", fontsize=10)
-        plt.xlim(min(population), max(population))
-
-plt.tight_layout()
-plt.show()
+# Simulation parameters
+pop_size = 100_000
+sample_sizes = [5, 10, 30, 50]
+n_samples = 1000
 </code></pre>
 <hr/>
-<h2 id="what-youll-discover"><strong>🔍 What You'll Discover</strong></h2>
-<p><img alt="alt text" src="../image.png"/></p>
-<h3 id="1-small-samples-n5"><strong>1️⃣ Small Samples (n=5)</strong></h3>
-<ul>
-<li>Histogram looks <strong>wild</strong> → Still resembles original shape  </li>
-<li><em>Example:</em> Exponential stays lopsided  </li>
-</ul>
-<h3 id="2-medium-samples-n30"><strong>2️⃣ Medium Samples (n=30)</strong></h3>
-<ul>
-<li>Starts looking <strong>smoother</strong> → Baby bell curve forming!  </li>
-</ul>
-<h3 id="3-large-samples-n50"><strong>3️⃣ Large Samples (n=50+)</strong></h3>
-<ul>
-<li><strong>Perfect normal distribution</strong> → Magic of CLT! 🎩✨  </li>
-<li><em>Even for "Weird Mix" data!</em> </li>
-</ul>
-<hr/>
-<h2 id="real-world-superpowers"><strong>🌎 Real-World Superpowers</strong></h2>
-<table>
-<thead>
-<tr>
-<th>Application</th>
-<th>How CLT Saves the Day</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Elections</strong> 🗳️</td>
-<td>Predict winner from small polls accurately</td>
-</tr>
-<tr>
-<td><strong>Drug Trials</strong> 💊</td>
-<td>Prove medicine works despite individual differences</td>
-</tr>
-<tr>
-<td><strong>Quality Control</strong> 🏭</td>
-<td>Detect faulty machines from sample testing</td>
-</tr>
-</tbody>
-</table>
-<hr/>
-<h2 id="play-with-these-settings"><strong>🎮 Play With These Settings!</strong></h2>
-<pre><code class="language-python"># TRY THESE TWEAKS:
-sample_sizes = [2, 10, 50, 100]  # Watch how tiny samples struggle!
-n_samples = 5000  # More means = smoother curves
+<h2 id="clt-simulator">📦 CLT Simulator</h2>
+<pre><code class="language-python">def simulate_clt(population, title):
+    for size in sample_sizes:
+        sample_means = [np.mean(np.random.choice(population, size=size)) for _ in range(n_samples)]
+
+        plt.figure(figsize=(8, 4))
+        sns.histplot(sample_means, kde=True, bins=30, stat="density", color="skyblue")
+        plt.axvline(np.mean(population), color="red", linestyle="--", label="True Mean")
+        plt.title(f"{title} — Sample Size {size}", fontsize=14)
+        plt.xlabel("Sample Mean")
+        plt.ylabel("Density")
+        plt.legend()
+        plt.tight_layout()
+        plt.show()
 </code></pre>
 <hr/>
-<h2 id="golden-insights"><strong>💡 Golden Insights</strong></h2>
+<h2 id="uniform-distribution">🟩 Uniform Distribution</h2>
+<pre><code class="language-python">uniform_pop = np.random.uniform(0, 100, size=pop_size)
+simulate_clt(uniform_pop, "Uniform Distribution")
+</code></pre>
+<hr/>
+<h2 id="exponential-distribution">🔶 Exponential Distribution</h2>
+<pre><code class="language-python">exp_pop = np.random.exponential(scale=50, size=pop_size)
+simulate_clt(exp_pop, "Exponential Distribution")
+</code></pre>
+<hr/>
+<h2 id="binomial-distribution">🎲 Binomial Distribution</h2>
+<pre><code class="language-python">binom_pop = np.random.binomial(n=10, p=0.5, size=pop_size)
+simulate_clt(binom_pop, "Binomial Distribution")
+</code></pre>
+<hr/>
+<h2 id="what-did-we-learn">🔍 What Did We Learn?</h2>
 <ul>
-<li><strong>Sample size &gt;30</strong> → Usually good enough for normality  </li>
-<li><strong>Skewed original data?</strong> → Needs bigger samples to "normalize"  </li>
-<li><strong>CLT explains why averages are everywhere</strong> (test scores, heights, etc.)  </li>
+<li>Even from <strong>non-normal distributions</strong> like Exponential or Binomial, the <strong>sample means</strong> become more <strong>bell-shaped</strong> as sample size grows.</li>
+<li>The <strong>spread</strong> of the sample mean shrinks with larger sample sizes — this is due to reduced standard error.</li>
+<li>CLT is <strong>powerful</strong>: it enables normal-based inference in the real world, even if your raw data isn’t normal.</li>
 </ul>
 <hr/>
-<h2 id="next-level-exploration"><strong>🚀 Next-Level Exploration</strong></h2>
-<ol>
-<li>Add <strong>"Crazy Distribution"</strong> → Like two humps (bimodal)  </li>
-<li>Test <strong>tiny samples (n=2)</strong> → See CLT fail dramatically  </li>
-<li>Plot <strong>standard deviation</strong> → Shows shrinking spread with bigger n  </li>
-</ol>
-<p><strong>Run this in Jupyter Notebook to interactively play!</strong> </p>
-<blockquote>
-<p><em>"The CLT is why statisticians sleep well at night."</em> 😴📈</p>
-</blockquote>
+<h2 id="applications">💼 Applications</h2>
+<ul>
+<li><strong>Polling</strong> and <strong>surveys</strong> — estimate average opinion from small samples.</li>
+<li><strong>Manufacturing</strong> — control product quality using means from random checks.</li>
+<li><strong>Finance</strong> — model returns, errors, and risk from sample averages.</li>
+</ul>
+<hr/>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
