@@ -133,8 +133,6 @@ Ah, got you now. Here's the corrected version with **all 10 time values listed e
 
 ---
 
-Let me know if you want the same version as a downloadable `.md` or `.pdf` or want to include calculated uncertainty formulas below the table.
-
 
 ---
 
