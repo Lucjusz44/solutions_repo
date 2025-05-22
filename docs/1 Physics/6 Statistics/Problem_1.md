@@ -45,7 +45,7 @@ simulate_clt(exp_pop, "Exponential Distribution")
 binom_pop = np.random.binomial(n=10, p=0.5, size=pop_size)
 simulate_clt(binom_pop, "Binomial Distribution")
 ```
-
+![alt text](image-2.png)
 ---
 
 ## 🔍 What Did We Learn?
